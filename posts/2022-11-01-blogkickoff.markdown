@@ -12,6 +12,12 @@ Without further ado, I'll set up the static site (if you are reading this I was 
 For the hakyll static site installation and setup, I followed (the creater of hakyll's blog)[https://jaspervdj.be/hakyll/tutorials/github-pages-tutorial.html]
 
 First thing I immediately noticed is that the main module, site.hs is all in haskell. It seems easy enough to read without know anything about the language and to find that the tutorial is pointing more toward (rather that I need to add something). This is great for my experiment since if I need to modify this I'll need to learn enough about Haskell to modify it. The tutorial went on relatively painless, it mentioned in the Deployment section that within a few seconds your hakyll site shoudl be visible, I now know this was not talking about the compile time in `stack build` but the pushing to github. 
+
 Don't do what I did and not read how to set up the github pages and just create any random repo name. If you did do this and need to change your origin name `git remote set-url origin <new ssh github name and link>` should do the trick.
-After this, the site came right up with a very generic looking page. I definitely need to spruce it up some and will do so in the comming hours or days.
+
+After this, the site came right up with a very generic looking page. I definitely need to spruce it up some and will do so in the comming hours or days. 
+
+In my attempt at publishing this blog (and may save some headaches down the road) I needed to change `.md` to `.markdown` as the file extension.
+
+The browse to `posts/2022-11-01-blogkickoff.html`. This html extension looks like it is added in from the site.hs file. But also, the docs configuration doesn't seem to be created and I can use the `posts` directory with no problems.
 
