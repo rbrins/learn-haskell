@@ -9,7 +9,7 @@ With that said, I need to start up the blog first, I've decided to use hakyll as
 
 Without further ado, I'll set up the static site (if you are reading this I was probably successfull), learning more about the functional programming paradigm, giving some thoughts on it, then doing enough crash courses to write a simple program or 5.
 
-For the hakyll static site installation and setup, I followed (the creater of hakyll's blog)[https://jaspervdj.be/hakyll/tutorials/github-pages-tutorial.html]
+For the hakyll static site installation and setup, I followed (the hakyll creater's tutorial blog)[https://jaspervdj.be/hakyll/tutorials/github-pages-tutorial.html]
 
 First thing I immediately noticed is that the main module, site.hs is all in haskell. It seems easy enough to read without know anything about the language and to find that the tutorial is pointing more toward (rather that I need to add something). This is great for my experiment since if I need to modify this I'll need to learn enough about Haskell to modify it. The tutorial went on relatively painless, it mentioned in the Deployment section that within a few seconds your hakyll site shoudl be visible, I now know this was not talking about the compile time in `stack build` but the pushing to github. 
 
