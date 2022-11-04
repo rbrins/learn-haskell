@@ -35,6 +35,8 @@
 * for loops are non-existent
 * since data is immutable <code>a = 1</code> and <code>let a = 1</code> seem to be the same thing as far as definitions go and I’m not sure when you would want to use one over the other
 * using some basic recursion I was able to get to the <code>' '</code> character and return something, but then adding this returned something up and continuing to go through the line did not happen in the first few hours of going through the tutorial.</p>
+<p>This was fun and an interesting puzzle to get my mind around. I kept trying to get the word counter working at a basic line level. This was met with head pounding around not understanding the recursion. This was where one of my blocks were in the word counter. I was only recursing to the delimiting character, in this case a blank space <code>' '</code>. This would only yield one word and I got compile errors for looking for the null value <code>''</code>.</p>
+<p>Fortunately, I was enlightened by a video explaining the impure <code>Maybe</code> values versus <code>Just</code> values (and I might be saying this wrong). I think this is going to be a day 4 implementation, but I’ll set the <code>Char</code> in the function to a <code>Maybe Char</code> and then can recurse until the end of the string (and then later the end of the file).</p>
 
 <div class="footer">
 	created with hakyll
