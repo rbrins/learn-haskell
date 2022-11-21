@@ -17,3 +17,22 @@ Which led to me looking for new tools, in this case a haskell editor for literat
 2. Use a plethora of open source solutions and custom write scripts that does the automation between them
 
 Emacs won out, while it will take a while to become comfortable with it, I reached out to my local mastadon instance [[https://fosstodon.org/home][fosstodon]] to ask about resources besides the default manual, to which I was directed to [[https://www.masteringemacs.org/article/beginners-guide-to-emacs][masteringemacs.org]] that had some articles that helped drive home some confusing points with simple commands under those headings.  
+
+* Next Steps
+- Start publishing with org-mode and org files instead of the markdown files, I might need to use pandoc to covert to markdown from org at first
+- Finish my personal emacs cheat sheet
+- Convert my intial haskell learnings to the literate programming with org-mode and babel?
+
+  #+BEGIN_SRC haskell
+  main :: IO()
+  main = putStrLn "Hello, World!"
+  #+END_SRC
+ 
+  prints, org-babel-execute-src-block: No org-babel-execute function for haskell!
+  and when editing I get, org-edit-src-code: No such language mode: haskell-mode
+
+
+- Restart my haskell learnings and blogging
+
+* Bonus
+I can now use emacs for other life management, like todos, projects, calendar sync, emails, programming. I liked the idea of obsidian and notion but found that with some masterying over those aspects in emacs you can have the same or more powerful functionality while owning the underlying code AND your data. With emacs server, TRAMP, and git I can take this functionality pretty much anywhere. Including my windblows computers that I keep around for offensive tool development and my other one for TTRPG gaming.
