@@ -1,0 +1,19 @@
+#+TITLE: Taking on Emacs
+#+OPTIONS: toc:nil
+#+AUTHOR: Russell Brinson
+
+* Why the Change?
+After toying with Haskell for a few days and really like the challenge (but mostly failing). I liked rediscovering this control over my computer experience. Please note, I'm saying rediscovered here and not saying that I couldn't do this with my existing knowledge of things like python or c, just simply me re-recongizing it was possible. Which then led me down the rabbit hole of how I interact with content and ultimately, what tools I use to do all of this.
+
+One of the core take aways was how I interact with content:
+1. I consume it, by reading or taking action on it
+2. I take action on it, using math, or cutting and pasting
+3. I format it, converting to PDF, exporting to the web
+
+But when I interact with content in the form of a Microsoft Word Document, I need to juggle each of these aspects at the same time. It seemed to slow me know or side-track me on my goals and objectives, because I was fighting with one of the interactions of content that didn't matter more than the interaction that did.
+
+Which led to me looking for new tools, in this case a haskell editor for literate programming. Emacs kept popping up which I rejected in the past. Then I kept seeing other trends in similar software and tools I was using (especially VS Code). Which led to me creating a personally specification that ultimately pointed to:
+1. Learn Emacs
+2. Use a plethora of open source solutions and custom write scripts that does the automation between them
+
+Emacs won out, while it will take a while to become comfortable with it, I reached out to my local mastadon instance [[https://fosstodon.org/home][fosstodon]] to ask about resources besides the default manual, to which I was directed to [[https://www.masteringemacs.org/article/beginners-guide-to-emacs][masteringemacs.org]] that had some articles that helped drive home some confusing points with simple commands under those headings.  
