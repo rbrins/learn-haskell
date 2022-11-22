@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-11-22 Tue 14:59 -->
+<!-- 2022-11-22 Tue 14:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rbrins' Blog</title>
+<title>Creating a Budget Template using Haskell, Org, and Literate Programming - Part 1 (probably)</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -196,43 +196,145 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">rbrins' Blog</h1>
+<h1 class="title">Creating a Budget Template using Haskell, Org, and Literate Programming - Part 1 (probably)</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org14c1dfd">1. Budgeting Fundamentals</a></li>
+<li><a href="#org634a766">2. Adding list of numbers</a></li>
+<li><a href="#orgac214cf">3. Input into the next eval block</a></li>
+<li><a href="#org9ff5c7b">4. Next Time</a></li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org1212e30" class="outline-2">
-<h2 id="org1212e30"><span class="section-number-2">1.</span> Hi</h2>
+<div id="outline-container-org14c1dfd" class="outline-2">
+<h2 id="org14c1dfd"><span class="section-number-2">1.</span> Budgeting Fundamentals</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-My name is Russell Brinson, I'm a information security professional, free and open source software advocate, and privacy enthusiast.
-Currently, I'm learning how to use emacs and program in haskell. In the near future, I'll begin work on my personal red teaming wiki as I go through the Red Team Ops I course again (this wiki currently lives in notion and will need to be migrated).
+Whenever I right out my monthly budget, it usually is categories with line items or subcategories under those. Then add up the numbers, compare to my expected take-home page, do any adjustments, and then add we accumulate expenses, the actual spending is compared to the budgeting, with live adjustments. All the way until the next month. Usually this are handwritten (or sometimes use <a href="https://www.youneedabudget.com/">YNAB</a>), but use a spreadsheet or calculator anyways, write these out and make an inky mess of corrections throughout the month. Ideally, this will help with that problem by providing a bit of a fresh interface to this, that can still be printed if desired.
+</p>
+
+<ul class="org-ul">
+<li>Adding and subtracting numbers (into groups, difference actual to budgeting)</li>
+<li>Tables / list of numbers</li>
+<li>grouping numbers by categories (Bills, Savings, Debt, etc)</li>
+</ul>
+
+<p>
+A Future state of this may try to address the paid-every-2-weeks that doesn't perfectly fit into a month issue, but for now, that is ignored.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5534723" class="outline-2">
-<h2 id="org5534723"><span class="section-number-2">2.</span> Blog Posts</h2>
+<div id="outline-container-org634a766" class="outline-2">
+<h2 id="org634a766"><span class="section-number-2">2.</span> Adding list of numbers</h2>
 <div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li><a href="posts/2022-11-23-Haskell-LP-Budget.html">2022-11-23 Budgeting with Literate Programming and Haskell Part 1</a></li>
-<li><a href="posts/2022-11-22-emacs-learnings.html">2022-11-22 Learning More Emacs</a></li>
-<li><a href="posts/2022-11-21-interactive-code.html">2022-11-21 Interactive &amp; Literate Programming</a></li>
-<li><a href="posts/2022-11-20-taking-on-emacs.html">2022-11-20 Taking on Emacs</a></li>
-</ul>
+<p>
+Fortunately, Haskell makes it easy to add a list of numbers by running the <code>sum</code> function on the list.
+Here I'm setting a list with numbers, then summing them up.
+Additionally, I've passed in the <code>#+NAME</code> to the source block so that I can pass that name into other blocks of code (this will be especially usefull when creating a summary.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell" id="org3b970aa">let b = [128.3, 90, 223.3, 120, 175]
+sum b
+</pre>
+</div>
+
+<pre class="example">
+736.6
+</pre>
 </div>
 </div>
 
-<div id="outline-container-org9f469a3" class="outline-2">
-<h2 id="org9f469a3"><span class="section-number-2">3.</span> Resources</h2>
+
+
+<div id="outline-container-orgac214cf" class="outline-2">
+<h2 id="orgac214cf"><span class="section-number-2">3.</span> Input into the next eval block</h2>
 <div class="outline-text-2" id="text-3">
-<ul class="org-ul">
-<li><a href="emacs-cheatsheet.html">My emacs cheatsheet</a></li>
-</ul>
+<p>
+Now that the previous example was successfull, We can try to pass the result into this next code block by setting a variable with <code>:var</code> in the <code>#+BEGING_SRC</code> declaration. Then assigning another source block name (the <code>#+NAME:</code> above) to a variable to be used in the current source block. In this case setting <code>intArraySum</code> to the result from <code>initial-array</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell" id="org0d9c257">let c = [123, 85.3, 12.4]
+subtract (sum c) intArraySum
+</pre>
+</div>
+
+<pre class="example">
+ghci&gt; 515.9
+</pre>
+
+
+<p>
+Not sure why this block's evaluated differently with the ghci string as part of the result. Lets pass the output to another block now to see if the <code>ghci&gt;</code> gets in the way.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">addFive x = x + 5
+addFive nextVar
+</pre>
+</div>
+
+<pre class="example">
+ghci&gt; 
+&lt;interactive&gt;:368:1-7: error:
+    * No instance for (Num String) arising from a use of `addFive'
+    * In the expression: addFive nextVar
+      In an equation for `it': it = addFive nextVar
+</pre>
+
+
+
+<p>
+So the ghci looks like it is messing up passing, but when I added a <code>sum c</code> into the source block it returned without the ghci (still not sure why). Which means we can pass this result to yet another function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell" id="org4728c06">let c = [123, 85.3, 12.4]
+sum c
+subtract (sum c) intArraySum
+</pre>
+</div>
+
+<pre class="example">
+515.9
+</pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-haskell">addFive x = x + 5
+addFive nextVar
+</pre>
+</div>
+
+<pre class="example">
+ghci&gt; 520.9
+</pre>
+
+<p>
+and I get the gchi prompt again&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ff5c7b" class="outline-2">
+<h2 id="org9ff5c7b"><span class="section-number-2">4.</span> Next Time</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+May or may not continue part 2 tomorrow, but I do need to figure out how to get org table in as list. If I can do that natively without custom effort, then I part 2 may be it. Otherwise, I'm probably going to work on some other task tomorrow.
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022 Nov 21</p>
+<p class="date">Date: 2022-11-23</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="date">Created: 2022-11-22 Tue 14:59</p>
+<p class="date">Created: 2022-11-22 Tue 14:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
