@@ -1,0 +1,15 @@
+#+TITLE: Blog Site Readme
+#+AUTHOR: Russell Brinson
+#+DATE: 2022-11-23
+#+OPTIONS: tasks:nil
+
+* My Blog Site
+- It started off trying to use hakyll as I was also trying to learn haskell, some of the default templates didn't work out of the box and I didn't have enough haskell experience to try to fix it.
+- Eventually in the same month, I found emacs and org mode, I started using org files and exporting to html, which naturally works just fine with a static site like a small blog hosted on github pages
+- Code blocks within web pages are GPL, blogs content of my experiences and prose are CC BY-NC-ND, website css is GPL, and finally website general formatting is CC BY-SA
+
+* Org -> HTML Workflow
+Since I switched to emacs, the general workflow is:
+- Create the desired webpage in a =.org= file
+- Export using =C-c C-e h o= to create an open the html exported file
+- Then stage and commit with magit =M-x Magit-Status= (if not already up) then =c c= to commit, type in the commit message, =C-c C-c=, then =P p= to push
