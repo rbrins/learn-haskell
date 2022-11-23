@@ -3,7 +3,8 @@
 #+DATE: 2022-11-23
 #+OPTIONS: tasks:nil
 
-* My Blog Site
+* Site Changes and License Info
+- [[https://rbrins.github.io]]
 - It started off trying to use hakyll as I was also trying to learn haskell, some of the default templates didn't work out of the box and I didn't have enough haskell experience to try to fix it.
 - Eventually in the same month, I found emacs and org mode, I started using org files and exporting to html, which naturally works just fine with a static site like a small blog hosted on github pages
 - Code blocks within web pages are GPL, blogs content of my experiences and prose are CC BY-NC-ND, website css is GPL, and finally website general formatting is CC BY-SA
