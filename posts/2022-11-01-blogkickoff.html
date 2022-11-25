@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2022-11-25 Fri 00:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rbrins' Blog</title>
+<title>Nanowrimo Blog Kick Off</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -195,54 +196,78 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">rbrins' Blog</h1>
+<h1 class="title">Nanowrimo Blog Kick Off</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orge710b2c">1. Nanowrimo Blog Kick Off</a></li>
+<li><a href="#org5b3325e">2. Setting up the static site</a></li>
+<li><a href="#org3eca10b">3. Note on 2022-11-25</a></li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org5f7de33" class="outline-2">
-<h2 id="org5f7de33">Hi</h2>
-<div class="outline-text-2" id="text-org5f7de33">
+<div id="outline-container-orge710b2c" class="outline-2">
+<h2 id="orge710b2c"><span class="section-number-2">1.</span> Nanowrimo Blog Kick Off</h2>
+<div class="outline-text-2" id="text-1">
 <p>
-My name is Russell Brinson, I'm a information security professional, free and open source software advocate, and privacy enthusiast.
-Currently, I'm learning how to use emacs and program in haskell. In the near future, I'll begin work on my personal red teaming wiki as I go through the Red Team Ops I course again (this wiki currently lives in notion and will need to be migrated).
+I've wanted to blog about my learning experiences and thoughts for a while now, fortunate events of joining Fosstodon then being reminded about nanowrimo kick started this. In order to blog about learning, I need to learn (or at least attempt) something. For this endeavor, I've chosen to try learn haskell. The reasons for choosing haskell are the functional programming paradigm is one aspect of my fascination, another is with the xmonad tile windows manager, yet another is better at literate programming, and finally offensive security applications that could arrise from it.
+</p>
+
+<p>
+Some of the learning projects and general order:
+</p>
+<ul class="org-ul">
+<li>I need to start up the blog first, I've decided to use hakyll as the static site generator wirtten in haskell.</li>
+<li>One of my first applications is going to be a word counter of my text files (so I can track my nanowrimo stats)</li>
+<li>And my end goal for the month is to have a basic web app that can connect to a database, serve a form to enter data, and compute something on that data. Probably the most basic of ledger web apps.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5b3325e" class="outline-2">
+<h2 id="org5b3325e"><span class="section-number-2">2.</span> Setting up the static site</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Without further ado, I'll set up the static site (if you are reading this I was probably mildly successfull), learning more about the functional programming paradigm, giving some thoughts on it, then doing enough crash courses to write a simple program.
+</p>
+
+<p>
+For the hakyll static site installation and setup, I followed <a href="https://jaspervdj.be/hakyll/tutorials/github-pages-tutorial.html">the hakyll creater's tutorial blog.</a>
+</p>
+
+<p>
+First thing I immediately noticed is that the main module, site.hs is all in haskell. It seems easy enough to read without know anything about the language and to find that the tutorial is pointing more toward (rather that I need to add something). This is great for my experiment since if I need to modify this I'll need to learn enough about Haskell to modify it. The tutorial went on relatively painless, it mentioned in the Deployment section that within a few seconds your hakyll site shoudl be visible, I now know this was not talking about the compile time in `stack build` but the pushing to github. After this, the site came right up with a very generic looking page. I definitely need to spruce it up some and will do so in the comming hours or days. 
+</p>
+
+<p>
+Don't do what I did and not read how to set up the github pages and just create any random repo name. If you did do this and need to change your origin name `git remote set-url origin &lt;new ssh github name and link&gt;` should do the trick.
+</p>
+
+<p>
+In my attempt at publishing this blog (and may save some headaches down the road) I needed to change `.md` to `.markdown` as the file extension. This might be a way to contribute back in the future, but for now will be a constraint I follow for building the site.
+</p>
+
+<p>
+Then browse to `posts/2022-11-01-blogkickoff.html`. This html extension looks like it is added in from the site.hs file. But also, the docs configuration doesn't seem to be created and I can use the `posts` directory with no problems.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb033887" class="outline-2">
-<h2 id="orgb033887">Blog Posts</h2>
-<div class="outline-text-2" id="text-orgb033887">
-<ul class="org-ul">
-<li><a href="posts/2022-11-24-thanksgiving-update.html">2022-11-24 Happy Thanksgiving</a></li>
-<li><a href="posts/2022-11-23-Haskell-LP-Budget.html">2022-11-23 Budgeting with Literate Programming and Haskell Part 1</a></li>
-<li><a href="posts/2022-11-22-emacs-learnings.html">2022-11-22 Learning More Emacs</a></li>
-<li><a href="posts/2022-11-21-interactive-code.html">2022-11-21 Interactive &amp; Literate Programming</a></li>
-<li><a href="posts/2022-11-20-taking-on-emacs.html">2022-11-20 Taking on Emacs</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org28e9e87" class="outline-2">
-<h2 id="org28e9e87">Resources</h2>
-<div class="outline-text-2" id="text-org28e9e87">
-<ul class="org-ul">
-<li><a href="emacs-cheatsheet.html">My emacs cheatsheet</a></li>
-<li><a href="https://github.com/rbrins/security-tools">My cyber security tools</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org4467d9b" class="outline-2">
-<h2 id="org4467d9b">Profiles</h2>
-<div class="outline-text-2" id="text-org4467d9b">
-<ul class="org-ul">
-<li><a rel="me" href="https://fosstodon.org/@rbrins">Mastodon</a></li>
-</ul>
+<div id="outline-container-org3eca10b" class="outline-2">
+<h2 id="org3eca10b"><span class="section-number-2">3.</span> Note on 2022-11-25</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+This was rewritten in org, then exported to html to maintain the consistent look. As part of that, hakyll is no longer used, and I never really got it working either. <a href="https://web.archive.org/web/20221125051348/https://rbrins.github.io/posts/2022-11-01-blogkickoff.html">This is the webarchive link to view if anyone wants to compare.</a>
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022 Nov 21</p>
+<p class="date">Date: 2022-11-01</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
+<p class="date">Created: 2022-11-25 Fri 00:15</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
