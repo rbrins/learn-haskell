@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2022-11-26 Sat 11:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rbrins' Blog</title>
+<title>Revisiting Dock Worker</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -195,56 +196,88 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">rbrins' Blog</h1>
+<h1 class="title">Revisiting Dock Worker</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org2dbf773">1. Overview</a></li>
+<li><a href="#org59eb90e">2. Revisiting Dock Worker</a>
+<ul>
+<li><a href="#org6acc4a2">2.1. Core Functionality</a></li>
+<li><a href="#org42a0b6e">2.2. Needed Updates</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org9d6c375" class="outline-2">
-<h2 id="org9d6c375">Hi</h2>
-<div class="outline-text-2" id="text-org9d6c375">
+
+<div id="outline-container-org2dbf773" class="outline-2">
+<h2 id="org2dbf773"><span class="section-number-2">1.</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
 <p>
-My name is Russell Brinson, I'm a information security professional, free and open source software advocate, and privacy enthusiast.
-Currently, I'm learning how to use emacs and program in haskell. In the near future, I'll begin work on my personal red teaming wiki as I go through the Red Team Ops I course again (this wiki currently lives in notion and will need to be migrated).
+In June of this year, I was researching and learning more about docker, and at the same time was learning about c2 communication methods. This naturally resulted in me looking for using docker as an impact or communication stager in heavy devops environments. Surprisingly, I didn't find anything and there were no examples in the sub-technique <a href="https://attack.mitre.org/techniques/T1567/001/">Exfiltration Over Web Service: Exfiltration to Code Repository</a>. 
+</p>
+
+
+<p>
+This is when I decided to write <a href="https://github.com/rbrins/dock-worker">Dock Worker</a>, a proof-of-concept exfiltration tool stuffing data into containers and using publicly available docker repos to exfiltrate the data. Then I published a blog at <a href="https://www.dc864.org/2022/07/exfiltrating-information-with-docker/">DC864 on the topic</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbcf7887" class="outline-2">
-<h2 id="orgbcf7887">Blog Posts</h2>
-<div class="outline-text-2" id="text-orgbcf7887">
-<ul class="org-ul">
-<li><a href="./posts/2022-11-26-revisiting-dockworker.html">2022-11-26 Revisiting Dock Worker</a></li>
-<li><a href="./posts/2022-11-25-publishing-with-org.html">2022-11-25 Publishing with Org</a></li>
-<li><a href="posts/2022-11-24-thanksgiving-update.html">2022-11-24 Happy Thanksgiving</a></li>
-<li><a href="posts/2022-11-23-Haskell-LP-Budget.html">2022-11-23 Budgeting with Literate Programming and Haskell Part 1</a></li>
-<li><a href="posts/2022-11-22-emacs-learnings.html">2022-11-22 Learning More Emacs</a></li>
-<li><a href="posts/2022-11-21-interactive-code.html">2022-11-21 Interactive &amp; Literate Programming</a></li>
-<li><a href="posts/2022-11-20-taking-on-emacs.html">2022-11-20 Taking on Emacs</a></li>
-</ul>
+<div id="outline-container-org59eb90e" class="outline-2">
+<h2 id="org59eb90e"><span class="section-number-2">2.</span> Revisiting Dock Worker</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+While doing my morning ritual of scrolling through mastodon, <a href="https://freeradical.zone/@thenewoil/109410700704859711">The New Oil</a> tooted a Bleeping Computer article on <a href="https://www.bleepingcomputer.com/news/security/docker-hub-repositories-hide-over-1-650-malicious-containers/">Docker Hub Repositories hide over 1,650 malicious containers</a>, and knew immediately today's blog would looking back at Dock Worker, and what my next steps are to making it a more robust, responsible red teamer tool.
+</p>
+</div>
+
+<div id="outline-container-org6acc4a2" class="outline-3">
+<h3 id="org6acc4a2"><span class="section-number-3">2.1.</span> Core Functionality</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+An exfiltration tool that uses devop accounts with python and docker. Furthermore, it is a single python script that then uses usually loose docker permisions given to devops accounts, creates a docker client, logins into the registry you are interested in, loads a file with all of the data to be exfiltrated, then pushes that out to the repository.
+</p>
+
+
+<p>
+The single python script is then uses to "unload" the repo and unpack the file from the container. 
+</p>
+
+
+<p>
+Note, this was a single script for PoC reasons, but also because it could be used to grab other payloads or tools from docker repos.
+</p>
 </div>
 </div>
 
-<div id="outline-container-org148be5d" class="outline-2">
-<h2 id="org148be5d">Resources</h2>
-<div class="outline-text-2" id="text-org148be5d">
-<ul class="org-ul">
-<li><a href="emacs-cheatsheet.html">My emacs cheatsheet</a></li>
-<li><a href="https://github.com/rbrins/security-tools">My cyber security tools</a></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org7442537" class="outline-2">
-<h2 id="org7442537">Profiles</h2>
-<div class="outline-text-2" id="text-org7442537">
+<div id="outline-container-org42a0b6e" class="outline-3">
+<h3 id="org42a0b6e"><span class="section-number-3">2.2.</span> Needed Updates</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+I'd like to start taking this out of the Proof-of-Concept stage and into a viable exfiltrate tools for red teamers looking to emulate a code or docker repository threat. To do that a number of changes need to be made including but certainly not limited to:
+</p>
+
 <ul class="org-ul">
-<li><a rel="me" href="https://fosstodon.org/@rbrins">Mastodon</a></li>
+<li>Split the code into two scripts that also may be merged</li>
+<li>Provide better argument support</li>
+<li>Encrypt the file passed to the dock worker</li>
+<li>Allow for base docker image to be malleable</li>
+<li>Add better debugging w/ examples</li>
+<li>Add better documentation w/ examples, esp. target audience</li>
 </ul>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022 Nov 21</p>
+<p class="date">Date: 2022-11-26</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
+<p class="date">Created: 2022-11-26 Sat 11:36</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
