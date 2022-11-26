@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2022-11-26 Sat 11:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rbrins' Blog</title>
+<title>Better Publishing with Org</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -195,55 +196,46 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">rbrins' Blog</h1>
+<h1 class="title">Better Publishing with Org</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orged400be">1. The Problem</a></li>
+<li><a href="#org2a80ec2">2. The Solution</a></li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org451af06" class="outline-2">
-<h2 id="org451af06">Hi</h2>
-<div class="outline-text-2" id="text-org451af06">
+<div id="outline-container-orged400be" class="outline-2">
+<h2 id="orged400be"><span class="section-number-2">1.</span> The Problem</h2>
+<div class="outline-text-2" id="text-1">
 <p>
-My name is Russell Brinson, I'm a information security professional, free and open source software advocate, and privacy enthusiast.
-Currently, I'm learning how to use emacs and program in haskell. In the near future, I'll begin work on my personal red teaming wiki as I go through the Red Team Ops I course again (this wiki currently lives in notion and will need to be migrated).
+As mentioned in briefly in my post on <a href="./2022-11-22-emacs-learnings.html">learning more emacs</a>, I'm looking to emacs as my productivity tool. It has been great so far, and I've even been able to publish better and quicker with it. Going from org file to exported html is incredibly easy. This problem is the exported html isn't completely reflective of what I'd like my blog to look like out of the box. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-org67433b7" class="outline-2">
-<h2 id="org67433b7">Blog Posts</h2>
-<div class="outline-text-2" id="text-org67433b7">
-<ul class="org-ul">
-<li><a href="./posts/2022-11-25-publishing-with-org.html">2022-11-25 Publishing with Org</a></li>
-<li><a href="posts/2022-11-24-thanksgiving-update.html">2022-11-24 Happy Thanksgiving</a></li>
-<li><a href="posts/2022-11-23-Haskell-LP-Budget.html">2022-11-23 Budgeting with Literate Programming and Haskell Part 1</a></li>
-<li><a href="posts/2022-11-22-emacs-learnings.html">2022-11-22 Learning More Emacs</a></li>
-<li><a href="posts/2022-11-21-interactive-code.html">2022-11-21 Interactive &amp; Literate Programming</a></li>
-<li><a href="posts/2022-11-20-taking-on-emacs.html">2022-11-20 Taking on Emacs</a></li>
-</ul>
-</div>
-</div>
+<div id="outline-container-org2a80ec2" class="outline-2">
+<h2 id="org2a80ec2"><span class="section-number-2">2.</span> The Solution</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I started with toggling <a href="https://orgmode.org/manual/Export-Settings.html">org export settings</a> on a off, with a slightly updated index page to be displayed (no timestamps, emacs version, org version, and no section numbers. This way great, and while I included <code>tasks:nil</code> in all of my org file headers, including this many manually was going not going to be fun. Fortunately, the youtube overlords recommened <a href="https://www.youtube.com/watch?v=AfkrzFodoNw">Build Your Website with Org Mode by System Crafters</a>, and I started diving into learning more aobut it.
+</p>
 
-<div id="outline-container-orgc05969b" class="outline-2">
-<h2 id="orgc05969b">Resources</h2>
-<div class="outline-text-2" id="text-orgc05969b">
-<ul class="org-ul">
-<li><a href="emacs-cheatsheet.html">My emacs cheatsheet</a></li>
-<li><a href="https://github.com/rbrins/security-tools">My cyber security tools</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org72666ae" class="outline-2">
-<h2 id="org72666ae">Profiles</h2>
-<div class="outline-text-2" id="text-org72666ae">
-<ul class="org-ul">
-<li><a rel="me" href="https://fosstodon.org/@rbrins">Mastodon</a></li>
-</ul>
+<ol class="org-ol">
+<li>First priority is to create a script that can work across all platform since I'm mainly on windows, the <code>build.sh</code> will not work for me (probably), which means using an <code>.el</code> file and knowing the commands.</li>
+<li>Get the easy-to-customize options in org exporting correct first</li>
+<li>Get the index page looking more like what I'd expect</li>
+<li>Finally, worry about theming and colors</li>
+</ol>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022 Nov 21</p>
+<p class="date">Date: 2022-11-25</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
+<p class="date">Created: 2022-11-26 Sat 11:02</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
