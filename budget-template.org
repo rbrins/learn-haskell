@@ -1,0 +1,108 @@
+#+TITLE: Monthly Budget Template
+#+AUTHOR: Russell Brinson
+#+DATE: 2022-11-28
+#+LICENSE: GPL v3 or any later
+
+* Summary
+
+** Goals
+- Write your goals for this month (or period of time) with specific goals in mind
+- Do something for yourself, even if it is a cheap as a chocolate bar, or making sure your gym membership is paid
+
+** Financial Summary
+
+This should display the budgeting amount, actual amount, totals, and difference for a quick glance of status. Additionally, through magic or programming, I'd love for the ammounts to be automatically calculated by the categories below. 
+
+| Name                | Budgeted Amount | Actual Amount | Difference |
+|---------------------+-----------------+---------------+------------|
+| Essential Items     |                 |               |          0 |
+| Non-Essential Items |                 |               |          0 |
+| Irregular Expenses  |                 |               |          0 |
+| Debt Payments       |                 |               |          0 |
+| Savings             |                 |               |          0 |
+|---------------------+-----------------+---------------+------------|
+| Income              |                 |               |          0 |
+|---------------------+-----------------+---------------+------------|
+| Totals              |               0 |             0 |          0 |
+#+TBLFM: $4=($2)-($3)::@8$2=vsum(@2$2..@6$2)::@8$3=vsum(@2$3..@6$3)
+' #+TBLFM: $4=($2)-($3)::@9$2=vsum(@2$2..@7$2)::@9$3=vsum(@2$3..@7$3)
+
+
+* Essential Items
+List all of your fixed bills, utilties, and anything you need to live or maintain living (like driving to work, car fuel, and car insurance). This would be a good portion of the [[https://www.reddit.com/r/personalfinance/wiki/commontopics/][Step 0 at r/personalfinance]]. 
+
+| Expense          | Budgeted Amount | Actual Amount | Difference |
+|------------------+-----------------+---------------+------------|
+| Rent             |                 |               |          0 |
+| Groceries        |                 |               |          0 |
+| Electricity      |                 |               |          0 |
+| Water            |                 |               |          0 |
+| Toiletries       |                 |               |          0 |
+| Internet         |                 |               |          0 |
+| Mobile Phone     |                 |               |          0 |
+| Car Insurance    |                 |               |          0 |
+| Car Fuel         |                 |               |          0 |
+| Health Insurance |                 |               |          0 |
+|------------------+-----------------+---------------+------------|
+| Totals           |               0 |             0 |          0 |
+|                  |                 |               |            |
+#+TBLFM: $4=($2)-($3)::@12$2=vsum(@2$2..@11$2)::@12$3=vsum(@2$3..@11$3)
+' #+TBLFM: $4=($2)-($3)::@12$2=vsum(@2$2..@11$2)::@12$3=vsum(@2$3..@11$3)
+
+
+* Non-Essential Items
+| Expense             | Budgeted Amount | Actual Amount | Difference |
+|---------------------+-----------------+---------------+------------|
+| TV Subscriptions    |                 |               |          0 |
+| Apple Subscriptions |                 |               |          0 |
+| Forge VTT           |                 |               |          0 |
+| Patreons            |                 |               |          0 |
+| FOSS                |                 |               |          0 |
+| Fun Spending Money  |                 |               |          0 |
+| Dinning Out         |                 |               |          0 |
+| Date Nights         |                 |               |          0 |
+|---------------------+-----------------+---------------+------------|
+| Totals              |               0 |             0 |          0 |
+#+TBLFM: $4=($2)-($3)::@10$2=vsum(@2$2..@9$2)::@10$3=vsum(@2$3..@9$3)
+' #+TBLFM: $4=($2)-($3)::@10$2=vsum(@2$2..@9$2)::@10$3=vsum(@2$3..@9$3)
+
+
+* Irregular Expenses
+
+| Expense                          | Due Date/Frequence | Budgeted Amount | Actual Amount | Difference | Balance |
+|----------------------------------+--------------------+-----------------+---------------+------------+---------|
+| Gifts (Birthday, Christmas, etc) |                    |                 |               |          0 |         |
+| Clothing                         |                    |                 |               |          0 |         |
+| Makeup                           |                    |                 |               |          0 |         |
+|                                  |                    |                 |               |          0 |         |
+|----------------------------------+--------------------+-----------------+---------------+------------+---------|
+| Totals                           |                    |               0 |             0 |          0 |         |
+#+TBLFM: $5=($3)-($4)::@6$3=vsum(@2$3..@5$3)::@6$4=vsum(@2$4..@5$4)
+' #+TBLFM: $5=($3)-($4)::@6$3=vsum(@2$3..@5$3)::@6$4=vsum(@2$4..@5$4)
+
+
+* Debt Payments
+Pay the minimums until a few steps further in the personalfinance flow chart. 
+
+| Debt Item      | Due Date | Minimum | Balance | Actual Paid |
+|----------------+----------+---------+---------+-------------|
+| Car Payment    |          |         |         |             |
+| Jeep Payment   |          |         |         |             |
+| Credit Card #1 |          |         |         |             |
+| Credit Card #2 |          |         |         |             |
+| Family Member  |          |         |         |             |
+|----------------+----------+---------+---------+-------------|
+| Totals         |          |       0 |         |           0 |
+|                |          |         |         |             |
+#+TBLFM: @7$3=vsum(@2$3..@6$3)::@7$5=vsum(@2$5..@6$5)
+' #+TBLFM: @7$3=vsum(@2$3..@6$3)::@7$5=vsum(@2$5..@6$5)
+
+
+A nice to have later, would be to be to calculate new balance and minimum payment. 
+
+* Savings
+Per step 0, building a small emergency fund of $1000 or one months worth of expenes is the first step in the personal finance flow chart.
+
+| Savings Item          | Budgeted | Actual | Difference | Balance |
+|-----------------------+----------+--------+------------+---------|
+| Small eFund (1 Month) |          |        |            |         |
