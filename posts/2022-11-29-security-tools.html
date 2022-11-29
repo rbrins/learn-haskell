@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rbrins' Blog</title>
+<title>Custom Security Tools</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -195,60 +195,58 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">rbrins' Blog</h1>
+<h1 class="title">Custom Security Tools</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orga16d3d4">1. Overview</a></li>
+<li><a href="#org524987b">2. Simple Ping Sweep</a></li>
+<li><a href="#orgaca870b">3. Filenames by Type From File</a></li>
+<li><a href="#org21ef0bc">4. Better Http.Server</a></li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org4be73fb" class="outline-2">
-<h2 id="org4be73fb">Hi</h2>
-<div class="outline-text-2" id="text-org4be73fb">
+<div id="outline-container-orga16d3d4" class="outline-2">
+<h2 id="orga16d3d4"><span class="section-number-2">1.</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
 <p>
-My name is Russell Brinson, I'm a information security professional, free and open source software advocate, and privacy enthusiast.
-Currently, I'm learning how to use emacs and program in haskell. In the near future, I'll begin work on my personal red teaming wiki as I go through the Red Team Ops I course again (this wiki currently lives in notion and will need to be migrated).
+I was recently going through some course materials and decided to push and catalog some of the custom scripting I have made. These mostly include wrappers around current functions or tools that automate or abstract the task at hand. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgdc10df2" class="outline-2">
-<h2 id="orgdc10df2">Blog Posts</h2>
-<div class="outline-text-2" id="text-orgdc10df2">
-<ul class="org-ul">
-<li><a href="./posts/2022-11-29-security-tools.html">2022-11-29 Security Tools</a></li>
-<li><a href="./posts/2022-11-28-budget-template-p3.html">2022-11-28 Budget Template Part 3</a></li>
-<li><a href="./posts/2022-11-27-budget-template-p2.html">2022-11-27 Budgeting with Org Part 2</a></li>
-<li><a href="./posts/2022-11-26-revisiting-dockworker.html">2022-11-26 Revisiting Dock Worker</a></li>
-<li><a href="./posts/2022-11-25-publishing-with-org.html">2022-11-25 Publishing with Org</a></li>
-<li><a href="posts/2022-11-24-thanksgiving-update.html">2022-11-24 Happy Thanksgiving</a></li>
-<li><a href="posts/2022-11-23-Haskell-LP-Budget.html">2022-11-23 Budgeting with Literate Programming and Haskell Part 1</a></li>
-<li><a href="posts/2022-11-22-emacs-learnings.html">2022-11-22 Learning More Emacs</a></li>
-<li><a href="posts/2022-11-21-interactive-code.html">2022-11-21 Interactive &amp; Literate Programming</a></li>
-<li><a href="posts/2022-11-20-taking-on-emacs.html">2022-11-20 Taking on Emacs</a></li>
-</ul>
+<div id="outline-container-org524987b" class="outline-2">
+<h2 id="org524987b"><span class="section-number-2">2.</span> <a href="https://github.com/rbrins/security-tools#networking-scanning">Simple Ping Sweep</a></h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Two programs that are just wraps around the ping command, one in bash and the other in python. Both take the first three octets, then provides the starting IP and ending IP octet to ping and look for the response that shows it is up. This can be something easy enough to put into the background and move on to other services (if you are a few pivots deep already and would like native discovery instead of proxychained nmap pingsweep).
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgd45fab0" class="outline-2">
-<h2 id="orgd45fab0">Resources</h2>
-<div class="outline-text-2" id="text-orgd45fab0">
-<ul class="org-ul">
-<li><a href="emacs-cheatsheet.html">My emacs cheatsheet</a></li>
-<li><a href="https://github.com/rbrins/security-tools">My cyber security tools</a></li>
-<li><a href="https://rbrins.github.io/budget-template.org">My Org Budget Template</a></li>
-</ul>
+<div id="outline-container-orgaca870b" class="outline-2">
+<h2 id="orgaca870b"><span class="section-number-2">3.</span> <a href="https://github.com/rbrins/security-tools/blob/main/extract-file-from-log.shExtract">Filenames by Type From File</a></h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Often logs will have loot in the form of filenames that are useful to an attack (rather, the contents of the files). This prints a list of unique sorted file names. 
+</p>
 </div>
 </div>
 
-<div id="outline-container-org1b1b9e9" class="outline-2">
-<h2 id="org1b1b9e9">Profiles</h2>
-<div class="outline-text-2" id="text-org1b1b9e9">
-<ul class="org-ul">
-<li><a rel="me" href="https://fosstodon.org/@rbrins">Mastodon</a></li>
-</ul>
+<div id="outline-container-org21ef0bc" class="outline-2">
+<h2 id="org21ef0bc"><span class="section-number-2">4.</span> <a href="https://github.com/rbrins/security-tools/blob/main/betterHttpServer.py">Better Http.Server</a></h2>
+<div class="outline-text-2" id="text-4">
+<p>
+During pentest, I'm always looking at transfering files. Whether this is for transfering a payload from my attacker machine to an existing foothold for a better reverse shell, or sending someone a payload to gather information. This is where the python http.server comes in handy. Incredibly useful and easy to setup. But there is no default option to print the headers when connections to the server happen. With BetterHttpServer, it is just as easy to setup but print the connecting User-Agent by default. Additional flags can print all headers, a specific header, and change the default port if desired. 
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022 Nov 21</p>
+<p class="date">Date: 2022-11-29</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
