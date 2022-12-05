@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rbrins' Blog</title>
+<title>Learning Nim - Argument Parsing</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -195,62 +195,192 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">rbrins' Blog</h1>
+<h1 class="title">Learning Nim - Argument Parsing</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgca3d3d2">1. What is Nim</a></li>
+<li><a href="#org1055010">2. Overview</a></li>
+<li><a href="#org447270b">3. Brief Basic Argument Parsing</a>
+<ul>
+<li><a href="#org6d547c9">3.1. Creating &amp; Setting Variables First</a></li>
+<li><a href="#orgba5d95b">3.2. Iterating Through the Arguments</a></li>
+<li><a href="#org4d1a1a1">3.3. Case Switching Kind of Argument</a></li>
+<li><a href="#orga6a67ab">3.4. Case Switching Key &amp; Value</a></li>
+<li><a href="#orgb13832f">3.5. Case Switching cmdEnd</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org42e8411" class="outline-2">
-<h2 id="org42e8411">Hi</h2>
-<div class="outline-text-2" id="text-org42e8411">
+<div id="outline-container-orgca3d3d2" class="outline-2">
+<h2 id="orgca3d3d2"><span class="section-number-2">1.</span> What is Nim</h2>
+<div class="outline-text-2" id="text-1">
 <p>
-My name is Russell Brinson, I'm a information security professional, free and open source software advocate, and privacy enthusiast.
-Currently, I'm learning nim and better malware emulation. In the near future, I'll begin work on my personal red teaming wiki as I go through the Red Team Ops I course again (this wiki currently lives in notion and will need to be migrated).
+<a href="https://nim-lang.org/">Nim</a> is a statically typed language with python-like syntax and the ability to add metaprogramming. It was designed to used for systems and embedded programming. It can be directly compiled to c, c++, objective-c, or javascript depending on the use case. 
+</p>
+
+
+<p>
+From the cyber security side of things, nim has had a number of offensive application interest in it. Mostly due to the ease of programming at the systems level, unfamiliarity of the compiled programs it generates with AV, the inherent "obfuscation" of windows api calls, and that reverse engineering tools /plugins arent readily built to handle the nim compiled binaries. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb6196f3" class="outline-2">
-<h2 id="orgb6196f3">Blog Posts</h2>
-<div class="outline-text-2" id="text-orgb6196f3">
-<ul class="org-ul">
-<li><a href="./posts/2022-12-05-learning-nim.html">2022-12-05 Learning Nim - Parsing CMD Arguments</a></li>
-<li><a href="./posts/2022-11-30-november-recap.html">2022-11-30 November Recap</a></li>
-<li><a href="./posts/2022-11-29-security-tools.html">2022-11-29 Security Tools</a></li>
-<li><a href="./posts/2022-11-28-budget-template-p3.html">2022-11-28 Budget Template Part 3</a></li>
-<li><a href="./posts/2022-11-27-budget-template-p2.html">2022-11-27 Budgeting with Org Part 2</a></li>
-<li><a href="./posts/2022-11-26-revisiting-dockworker.html">2022-11-26 Revisiting Dock Worker</a></li>
-<li><a href="./posts/2022-11-25-publishing-with-org.html">2022-11-25 Publishing with Org</a></li>
-<li><a href="posts/2022-11-24-thanksgiving-update.html">2022-11-24 Happy Thanksgiving</a></li>
-<li><a href="posts/2022-11-23-Haskell-LP-Budget.html">2022-11-23 Budgeting with Literate Programming and Haskell Part 1</a></li>
-<li><a href="posts/2022-11-22-emacs-learnings.html">2022-11-22 Learning More Emacs</a></li>
-<li><a href="posts/2022-11-21-interactive-code.html">2022-11-21 Interactive &amp; Literate Programming</a></li>
-<li><a href="posts/2022-11-20-taking-on-emacs.html">2022-11-20 Taking on Emacs</a></li>
-</ul>
+
+<div id="outline-container-org1055010" class="outline-2">
+<h2 id="org1055010"><span class="section-number-2">2.</span> Overview</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Coming from a strong python and minor c, it feel familiar and definitely has its quirks, like argument parsing. I didn't find a lot of great sources on argument parsing, and the exmamples I did find, while would work, felt lacking in the explanation of what was going on and why thing were named the way they were. 
+</p>
+
+
+<p>
+Hopefully, today (or whenever you are reading this) you will be a little more understanding of argument parsing in nim. Additionally, please note, this isn't meant to be the guide on production system argument parsing in nim. Just a cyber security guy trying to write quick programs, if I find a new, safer or more robust, way of parsing later, I'll hopefully edit this with a link. 
+</p>
+
+
+<p>
+Also, reading this will have code snipets that explain the code in the source block below. To get the <a href="https://gist.github.com/rbrins/4b349d0df715e2ce8b9c675b74471620#file-parsing-nim">whole gist, click here</a>.
+</p>
 </div>
 </div>
 
-<div id="outline-container-org2692534" class="outline-2">
-<h2 id="org2692534">Resources</h2>
-<div class="outline-text-2" id="text-org2692534">
+<div id="outline-container-org447270b" class="outline-2">
+<h2 id="org447270b"><span class="section-number-2">3.</span> Brief Basic Argument Parsing</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Some overview notes:
+</p>
 <ul class="org-ul">
-<li><a href="emacs-cheatsheet.html">My emacs cheatsheet</a></li>
-<li><a href="https://github.com/rbrins/security-tools">My cyber security tools</a></li>
-<li><a href="https://rbrins.github.io/budget-template.org">My Org Budget Template</a></li>
+<li>see documentation page for slightly more details: <a href="https://nim-lang.org/docs/parseopt.html">https://nim-lang.org/docs/parseopt.html</a></li>
+<li>each argument token has a kind, a key, and val. 
+<ul class="org-ul">
+<li>kind being the type of argument, cmdEnd signaling the end of the command line</li>
+<li>key being the name</li>
+<li>val being the key's value provided or empty string</li>
+</ul></li>
+<li>in nim, argument values must be passed with <code>=</code> or <code>:</code></li>
 </ul>
+</div>
+
+
+<div id="outline-container-org6d547c9" class="outline-3">
+<h3 id="org6d547c9"><span class="section-number-3">3.1.</span> Creating &amp; Setting Variables First</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+First I added variables that the command line arguments would change or add. In this case, I only have portNum, which will specify the port number to use when listening for connections. 
+We use a variable here because the immutable types aren't compatible with a default value that changes in or out of the loop. immutable <code>let</code> with no assignment other than the argument value itself <i>should</i> be fine.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nim">var portNum: int = 5454
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgb4d806e" class="outline-2">
-<h2 id="orgb4d806e">Profiles</h2>
-<div class="outline-text-2" id="text-orgb4d806e">
+<div id="outline-container-orgba5d95b" class="outline-3">
+<h3 id="orgba5d95b"><span class="section-number-3">3.2.</span> Iterating Through the Arguments</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Using the <a href="https://nim-lang.org/docs/parseopt.html#getopt.i%2Cseq%5Bstring%5D%2Cset%5Bchar%5D%2Cseq%5Bstring%5D">proc getopt</a>, we iterate through the command line arguments, returning a tuple. This tuple has the conents of the kind, key, and value of the command line argument currently present in the interation. 
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-nim">for kind, key, value in getopt(): # we do this because it is a tuple of three returned
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4d1a1a1" class="outline-3">
+<h3 id="org4d1a1a1"><span class="section-number-3">3.3.</span> Case Switching Kind of Argument</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+<a href="https://nim-lang.org/docs/parseopt.html#CmdLineKind">Kind (CmdLineKind)</a> is the type of argument present: 
+</p>
 <ul class="org-ul">
-<li><a rel="me" href="https://fosstodon.org/@rbrins">Mastodon</a></li>
+<li>cmdArgument</li>
+<li>cmdLongOption</li>
+<li>cmdShortOption</li>
+<li>cmdEnd</li>
 </ul>
+
+<p>
+The first case switch dictates how we process the argument (since cmdArgument doesn't have a value). If we encounter this we could nest another case switch under that checks a counter of cmdArguments (maybe with an int.inc) that would assign variables based on the position, thus being a positional argument.
+</p>
+
+<p>
+The other case switches are based on the value of kind (the list of types above). These can be processed further with keys and values.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nim">case kind
+
+     of cmdArgument:
+     of cmdLongOption, cmdShortOption:
+     of cmdEnd:
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6a67ab" class="outline-3">
+<h3 id="orga6a67ab"><span class="section-number-3">3.4.</span> Case Switching Key &amp; Value</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+With <code>cmdLongOption</code> and <code>cmdShortOption</code>, we are also passed a key and value. To pass this it expects the <code>-</code> hyphen. So to have the key "p", like in the example below with a value of 5000. The command line argument would look something like <code>-p=5000</code> or <code>-p:5000</code> but NOT like <code>-p 5000</code>. 
+</p>
+
+
+<p>
+In both of the first two statements (<code>-p=5000</code> and <code>-p:5000</code>):
+</p>
+<ul class="org-ul">
+<li>the <b>kind</b> of argument is: <b>cmdShortOption</b></li>
+<li>the <b>key</b> of the argument is just: <b>p</b></li>
+<li>the <b>value</b> of the argument is: <b>5000</b></li>
+</ul>
+
+
+<p>
+Note, the value passed may be an empty string <code>""</code> so check for the value being empty and handle appropriately. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nim">of cmdLongOption, cmdShortOption:
+   case key
+   of "p":
+     discard parseInt(value, portNum, 0) 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb13832f" class="outline-3">
+<h3 id="orgb13832f"><span class="section-number-3">3.5.</span> Case Switching cmdEnd</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+In this case, since we are using <code>getopt</code> we don't need to check for <code>kind =</code> cmdEnd= because <code>getopt</code> handles that for us. I just <code>discard</code> here to show one method of potentially handling with another way (not using getopt).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nim">of cmdEnd:
+  discard
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022 Nov 21</p>
+<p class="date">Date: 2022-12-05</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
