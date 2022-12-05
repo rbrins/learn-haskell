@@ -200,23 +200,24 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgca3d3d2">1. What is Nim</a></li>
-<li><a href="#org1055010">2. Overview</a></li>
-<li><a href="#org447270b">3. Brief Basic Argument Parsing</a>
+<li><a href="#orgad09120">1. What is Nim</a></li>
+<li><a href="#org239831b">2. Overview</a></li>
+<li><a href="#org5db25a5">3. Brief Basic Argument Parsing</a>
 <ul>
-<li><a href="#org6d547c9">3.1. Creating &amp; Setting Variables First</a></li>
-<li><a href="#orgba5d95b">3.2. Iterating Through the Arguments</a></li>
-<li><a href="#org4d1a1a1">3.3. Case Switching Kind of Argument</a></li>
-<li><a href="#orga6a67ab">3.4. Case Switching Key &amp; Value</a></li>
-<li><a href="#orgb13832f">3.5. Case Switching cmdEnd</a></li>
+<li><a href="#orgf408846">3.1. Creating &amp; Setting Variables First</a></li>
+<li><a href="#org6634bff">3.2. Iterating Through the Arguments</a></li>
+<li><a href="#org658c512">3.3. Case Switching Kind of Argument</a></li>
+<li><a href="#orgf182b79">3.4. Case Switching Key &amp; Value</a></li>
+<li><a href="#orgfab61c9">3.5. Case Switching cmdEnd</a></li>
 </ul>
 </li>
+<li><a href="#orgb8a277e">4. Putting it all Together</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgca3d3d2" class="outline-2">
-<h2 id="orgca3d3d2"><span class="section-number-2">1.</span> What is Nim</h2>
+<div id="outline-container-orgad09120" class="outline-2">
+<h2 id="orgad09120"><span class="section-number-2">1.</span> What is Nim</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <a href="https://nim-lang.org/">Nim</a> is a statically typed language with python-like syntax and the ability to add metaprogramming. It was designed to used for systems and embedded programming. It can be directly compiled to c, c++, objective-c, or javascript depending on the use case. 
@@ -230,8 +231,8 @@ From the cyber security side of things, nim has had a number of offensive applic
 </div>
 
 
-<div id="outline-container-org1055010" class="outline-2">
-<h2 id="org1055010"><span class="section-number-2">2.</span> Overview</h2>
+<div id="outline-container-org239831b" class="outline-2">
+<h2 id="org239831b"><span class="section-number-2">2.</span> Overview</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Coming from a strong python and minor c, it feel familiar and definitely has its quirks, like argument parsing. I didn't find a lot of great sources on argument parsing, and the exmamples I did find, while would work, felt lacking in the explanation of what was going on and why thing were named the way they were. 
@@ -249,8 +250,8 @@ Also, reading this will have code snipets that explain the code in the source bl
 </div>
 </div>
 
-<div id="outline-container-org447270b" class="outline-2">
-<h2 id="org447270b"><span class="section-number-2">3.</span> Brief Basic Argument Parsing</h2>
+<div id="outline-container-org5db25a5" class="outline-2">
+<h2 id="org5db25a5"><span class="section-number-2">3.</span> Brief Basic Argument Parsing</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Some overview notes:
@@ -268,8 +269,8 @@ Some overview notes:
 </div>
 
 
-<div id="outline-container-org6d547c9" class="outline-3">
-<h3 id="org6d547c9"><span class="section-number-3">3.1.</span> Creating &amp; Setting Variables First</h3>
+<div id="outline-container-orgf408846" class="outline-3">
+<h3 id="orgf408846"><span class="section-number-3">3.1.</span> Creating &amp; Setting Variables First</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 First I added variables that the command line arguments would change or add. In this case, I only have portNum, which will specify the port number to use when listening for connections. 
@@ -283,8 +284,8 @@ We use a variable here because the immutable types aren't compatible with a defa
 </div>
 </div>
 
-<div id="outline-container-orgba5d95b" class="outline-3">
-<h3 id="orgba5d95b"><span class="section-number-3">3.2.</span> Iterating Through the Arguments</h3>
+<div id="outline-container-org6634bff" class="outline-3">
+<h3 id="org6634bff"><span class="section-number-3">3.2.</span> Iterating Through the Arguments</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Using the <a href="https://nim-lang.org/docs/parseopt.html#getopt.i%2Cseq%5Bstring%5D%2Cset%5Bchar%5D%2Cseq%5Bstring%5D">proc getopt</a>, we iterate through the command line arguments, returning a tuple. This tuple has the conents of the kind, key, and value of the command line argument currently present in the interation. 
@@ -298,8 +299,8 @@ Using the <a href="https://nim-lang.org/docs/parseopt.html#getopt.i%2Cseq%5Bstri
 </div>
 </div>
 
-<div id="outline-container-org4d1a1a1" class="outline-3">
-<h3 id="org4d1a1a1"><span class="section-number-3">3.3.</span> Case Switching Kind of Argument</h3>
+<div id="outline-container-org658c512" class="outline-3">
+<h3 id="org658c512"><span class="section-number-3">3.3.</span> Case Switching Kind of Argument</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <a href="https://nim-lang.org/docs/parseopt.html#CmdLineKind">Kind (CmdLineKind)</a> is the type of argument present: 
@@ -330,8 +331,8 @@ The other case switches are based on the value of kind (the list of types above)
 </div>
 </div>
 
-<div id="outline-container-orga6a67ab" class="outline-3">
-<h3 id="orga6a67ab"><span class="section-number-3">3.4.</span> Case Switching Key &amp; Value</h3>
+<div id="outline-container-orgf182b79" class="outline-3">
+<h3 id="orgf182b79"><span class="section-number-3">3.4.</span> Case Switching Key &amp; Value</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 With <code>cmdLongOption</code> and <code>cmdShortOption</code>, we are also passed a key and value. To pass this it expects the <code>-</code> hyphen. So to have the key "p", like in the example below with a value of 5000. The command line argument would look something like <code>-p=5000</code> or <code>-p:5000</code> but NOT like <code>-p 5000</code>. 
@@ -362,8 +363,8 @@ Note, the value passed may be an empty string <code>""</code> so check for the v
 </div>
 </div>
 
-<div id="outline-container-orgb13832f" class="outline-3">
-<h3 id="orgb13832f"><span class="section-number-3">3.5.</span> Case Switching cmdEnd</h3>
+<div id="outline-container-orgfab61c9" class="outline-3">
+<h3 id="orgfab61c9"><span class="section-number-3">3.5.</span> Case Switching cmdEnd</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 In this case, since we are using <code>getopt</code> we don't need to check for <code>kind =</code> cmdEnd= because <code>getopt</code> handles that for us. I just <code>discard</code> here to show one method of potentially handling with another way (not using getopt).
@@ -374,6 +375,61 @@ In this case, since we are using <code>getopt</code> we don't need to check for 
   discard
 </pre>
 </div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb8a277e" class="outline-2">
+<h2 id="orgb8a277e"><span class="section-number-2">4.</span> Putting it all Together</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+This is putting all of the information above along with some comments, and the discard to handle the cmdArgument kind (if needed for your program). 
+</p>
+
+<p>
+Note: The <a href="https://gist.github.com/rbrins/4b349d0df715e2ce8b9c675b74471620#file-parsing-nim">gist</a> has syntax highlighting for easier reading.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nim"># default variables that could be modified from cmd arguments (if needed /desired)
+var portNum: int = 5454
+
+# CLI Arguments for the Server
+#  in nim argument values must be passed with = or :
+
+# Brief Basic Arugment Parsing in Nim, probably not for production arg parsing
+# see documentation page for slightly more details: https://nim-lang.org/docs/parseopt.html
+# each argument token has a kind, a key, and val. 
+# ... kind being the type of argument, cmdEnd signaling the end of the command line
+# ... key being the name
+# ... val being the key's value provided or empty string
+# getopt: is for iterating over the arguments with it returning the tuple with kind, key, val 
+# ... https://nim-lang.org/docs/parseopt.html#getopt
+for kind, key, value in getopt(): # we do this because it is a tuple of three returned
+
+  # kind (CmdLineKind): this is the type of argument seen, cmdArgument, cmdLongOption, or cmdShortOption
+  # our first case switch because it dictates how we process the argument (since cmdArgument doesnt have a value)
+  case kind
+  # cmdArgument is without the "-" in the arguments, 
+  # like nim c ./file.nim, the c is a cmdArgument
+  of cmdArgument:
+    # echo "Got arg with key: ", key
+    discard #(should discard this iteration of the loop and move to the next one)
+
+  # cmdLongOption, cmdShortOption: 
+  of cmdLongOption, cmdShortOption:
+    case key
+    # -p is to specify port number as in -p=443 or -p:443 but not -p 443
+    of "p":
+      # echo "Got arg 'p' with value: ", value
+      # change the port value string, to an int &amp; store in portNum variable defined above
+      discard parseInt(value, portNum, 0) 
+  # getopt tells us this is not needed to check for (but may for other procs with arguments parsing)
+  of cmdEnd:
+    discard # we shouldn't need to discard this and move on to after the loop now
+
+</pre>
 </div>
 </div>
 </div>
