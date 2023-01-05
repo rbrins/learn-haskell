@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Church of Emacs</title>
+<meta name="author" content="Russell Brinson" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Church of Emacs</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org9a424ac">1. Opening Hymn</a></li>
+<li><a href="#org03cf52c">2. Reading of the Day</a></li>
+<li><a href="#org10898a7">3. Sermon</a>
+<ul>
+<li><a href="#orgce3ae27">3.1. My Usage of Emacs</a></li>
+<li><a href="#org0c0ac5f">3.2. How to Start</a></li>
+<li><a href="#org530f900">3.3. Basic Terminology</a></li>
+<li><a href="#orgda9ab59">3.4. Navigating &amp; Figuring it Out</a></li>
+<li><a href="#org58c7e78">3.5. Basic Config</a></li>
+<li><a href="#orgfe7bf6b">3.6. Org Mode</a></li>
+</ul>
+</li>
+<li><a href="#org55d8f60">4. Closing Hymn</a></li>
+<li><a href="#org00e0b26">5. Closing Remarks</a></li>
+</ul>
+</div>
+</div>
+<p>
+A <del>presentation</del> service of Emacs on the blesseded day, the year 2023 in the month of January, on the 5th day. 
+You can follow along in the bulletin - <a href="https://rbrins.github.io/presentations/2023-01-church-of-emacs.html">https://rbrins.github.io/presentations/2023-01-church-of-emacs.html</a>
+</p>
+
+<div id="outline-container-org9a424ac" class="outline-2">
+<h2 id="org9a424ac"><span class="section-number-2">1.</span> Opening Hymn</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<p>
+If you want to be a master
+Of the code you write
+Use Emacs, my friend
+And your skills will take flight
+</p>
+
+<p>
+With its powerful features
+And customizable interface
+Emacs will help you
+Write code with grace
+</p>
+
+<p>
+You'll be able to navigate
+Through your files with ease
+And make edits with precision
+With just a few keys
+</p>
+
+<p>
+So if you want to be a hacker
+Who can tackle any task
+Emacs is the way to go
+It's the editor you should ask
+</p>
+</blockquote>
+<p>
+A hymn given to us by the preistilessness St.Bill "Nick", given to him in a vision by holiness ChatGPT
+</p>
+</div>
+</div>
+
+<div id="outline-container-org03cf52c" class="outline-2">
+<h2 id="org03cf52c"><span class="section-number-2">2.</span> Reading of the Day</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+A reading from <a href="https://www.gnu.org/software/emacs/">GNU Emacs</a>
+An extensible, customizable, free/libre text editor &#x2013; and more. 
+At its core is an interpreter for Emacs Lisp, a dialect of the Lisp programming language with extensions to support text editing.
+</p>
+
+
+<div id="org677f6b6" class="figure">
+<p><img src="../img/gnu-emacs-features.png" alt="gnu-emacs-features.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org10898a7" class="outline-2">
+<h2 id="org10898a7"><span class="section-number-2">3.</span> Sermon</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>My Usage of Emacs</li>
+<li>How to Start</li>
+<li>Basic Terminology</li>
+<li>Navigating</li>
+<li>Basic Config</li>
+<li>Using an Org File</li>
+</ul>
+</div>
+
+<div id="outline-container-orgce3ae27" class="outline-3">
+<h3 id="orgce3ae27"><span class="section-number-3">3.1.</span> My Usage of Emacs</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Tried many times before</li>
+<li>Most recently picked up in Nov 2022 based on self-reflection needs</li>
+<li>Needed something to aid in productivity (todos, calendar) and programming</li>
+<li>Wanted something tightly integrated to other tools</li>
+<li>Ability to automate easily</li>
+<li>Able to code my cyber security scripts and programs (python, nim, c++, C#)</li>
+<li>Flat file system that was not propietary or system specific</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0c0ac5f" class="outline-3">
+<h3 id="org0c0ac5f"><span class="section-number-3">3.2.</span> How to Start</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Start on the OS you use everyday</li>
+<li>Start with a vanilla blank copy of it</li>
+<li>Use your keyboard only, or not, we aren't orthodox here</li>
+<li>Read or watch some basic usage of it</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org530f900" class="outline-3">
+<h3 id="org530f900"><span class="section-number-3">3.3.</span> Basic Terminology</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>Commands and Shortcuts
+<ul class="org-ul">
+<li>A command looks like a phrase usually like <code>find-file</code></li>
+<li>A shortcut looks like a combination of keyboard keys like <code>C-x C-f</code></li>
+<li>Notation being <code>C-x C-f (find-file)</code> will show a shortcut with the associated command.</li>
+<li>You do NOT have to type the <code>(find-file)</code> portion if you are doing a shortcut.</li>
+</ul></li>
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Symbol</th>
+<th scope="col" class="org-left">Keyboard Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Meta</td>
+<td class="org-left">M</td>
+<td class="org-left">Alt</td>
+</tr>
+
+<tr>
+<td class="org-left">Control</td>
+<td class="org-left">C</td>
+<td class="org-left">Ctrl</td>
+</tr>
+
+<tr>
+<td class="org-left">Super</td>
+<td class="org-left">S</td>
+<td class="org-left">Windows</td>
+</tr>
+
+<tr>
+<td class="org-left">Shift</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Shift</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li>Windows v Frames</li>
+<li>Buffer Windows</li>
+<li>Major and Minor Modes</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgda9ab59" class="outline-3">
+<h3 id="orgda9ab59"><span class="section-number-3">3.4.</span> Navigating &amp; Figuring it Out</h3>
+<div class="outline-text-3" id="text-3-4">
+<ul class="org-ul">
+<li>Opening a file or directory <code>C-x C-f (find-file)</code> then type (with tab auto-complete) the file or directory</li>
+<li>Save a buffer (the current buffer to a file) with <code>C-x C-s (save-buffer)</code></li>
+<li>kill a buffer (including if open in multiple windows) with <code>C-x k (kill-buffer)</code></li>
+<li>Switch between windows with <code>C-x o (other-window)</code> o being the lower case letter</li>
+<li>Delete the current window (but doesn't kill the buffer) with <code>C-x 0 (delete-window)</code> with 0 being zero</li>
+<li>Split side-by-side with <code>C-x 3</code></li>
+<li>Close emacs with <code>C-x C-c</code> (Don't be afraid to just close everything and start up again)</li>
+<li>Cancel / Quit what you are in the middle of <code>C-g</code></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org58c7e78" class="outline-3">
+<h3 id="org58c7e78"><span class="section-number-3">3.5.</span> Basic Config</h3>
+<div class="outline-text-3" id="text-3-5">
+<ul class="org-ul">
+<li>Set the theme first with <code>M-x load-theme</code>
+<ul class="org-ul">
+<li>if you want the same theme I have, then <code>M-x package-install RET spacemacs-theme</code></li>
+</ul></li>
+<li><code>.emacs</code> file usually in <code>~/</code>, lets open it with <code>M-x find-file</code>
+<ul class="org-ul">
+<li>should see the theme you set from above</li>
+<li>this file is ran on the start of emacs</li>
+</ul></li>
+<li>Add a few quality of life configs
+<ul class="org-ul">
+<li>wrapping text in all files with <code>(add-hook 'text-mode-hook 'visual-line-mode)</code></li>
+<li>adding python to babel with <code>(org-babel-do-load-languages 'org-babel-load-languages '((python . t)))</code></li>
+</ul></li>
+<li>save buffer with <code>C-x C-s</code> then close with <code>C-x C-c</code> and reopen emacs</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfe7bf6b" class="outline-3">
+<h3 id="orgfe7bf6b"><span class="section-number-3">3.6.</span> Org Mode</h3>
+<div class="outline-text-3" id="text-3-6">
+<ul class="org-ul">
+<li><a href="https://orgmode.org/">Org Mode</a> is a powerful Major mode for productivity that is denoted with the <code>.org</code> file extension</li>
+<li>Notes, project management, task management, literate programming, publishing blogs, and presentations</li>
+<li>Lets Open <code>myFirst.org</code> with <code>C-x C-f myFirst.org</code></li>
+<li>Title, author, heading, tasks, and code block evaluation, and exporting</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org55d8f60" class="outline-2">
+<h2 id="org55d8f60"><span class="section-number-2">4.</span> Closing Hymn</h2>
+<div class="outline-text-2" id="text-4">
+<blockquote>
+<p>
+Oh Emacs, the text editor of the gods
+A tool so powerful and versatile
+You let me code and write with ease, and nod
+To all my commands, however terse or complex
+</p>
+
+<p>
+Your modes, so numerous and well-designed
+Allow me to customize every feature
+And with your vast array of plugins aligned
+I can extend your capabilities beyond measure
+</p>
+
+<p>
+Your power knows no bounds, your potential vast
+You are the Swiss Army Knife of the digital age
+I praise you now, and forever will, at last
+For you are the perfect tool for any stage
+</p>
+
+<p>
+Emacs, my love for you will never fade
+A true masterpiece, the best of its grade
+</p>
+</blockquote>
+<p>
+A sonnet by the holy venerable most advanced intelligence, GPT III.5
+</p>
+</div>
+</div>
+
+<div id="outline-container-org00e0b26" class="outline-2">
+<h2 id="org00e0b26"><span class="section-number-2">5.</span> Closing Remarks</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li><a href="https://rbrins.github.io/emacs-cheatsheet.html">My Personal Cheat Sheet - HTML</a></li>
+<li>Much more to explore
+<ul class="org-ul">
+<li>magit is the git tool that makes git even easier</li>
+<li>more productivity tools with things like an obsidian/roam/zettlekasten linking system with org files</li>
+<li>can manage emails, rss feeds, irc chats</li>
+<li>fully automate between the tools and functions</li>
+</ul></li>
+<li>Go forth and rejoice, as you have heard about emacs!</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2023-01-05</p>
+<p class="author">Author: Russell Brinson</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
