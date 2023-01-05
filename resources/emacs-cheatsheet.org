@@ -1,0 +1,168 @@
+#+TITLE: Emacs Cheat Sheet
+#+AUTHOR: Russell Brinson
+#+DATE: 2023-01-05
+#+OPTIONS: tasks:nil timestamp:nil
+
+* Introductions Resources
+Before getting much more comfortable with emacs at the point I am today, I tried a bit of everything. Between mastering emacs and finally understanding that every (at least ones I've encountered) shortcut is a command too that can be invoked with =M-x <command>=, here are all of the primary introduction resources I used.
+1. Start with going through the motions of the built-in tutorial (after installing emacs)
+2. [[https://www.masteringemacs.org/article/beginners-guide-to-emacs][Mastering Emacs - Beginner's Guide]] - this did some much for me in the realm of being able to apply some of the basic things I did
+3. [[https://systemcrafters.net/emacs-essentials/absolute-beginners-guide-to-emacs/][System Crafters - Beginner's Guide]] - I found this in the middle of starting to grasp the content and appreciated their content (which includes youtube videos)
+4. [[https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][The Emacs Manual]] - this was pretty much in every search and between the first two resources helped me navigate this and ask better question to the web search engines
+5. [[https://orgmode.org/manual/index.html][The Org Manual]] - and this was in every search that related to org mode
+
+Take away is find a good introduction that resonates with how you pick up an initial concept, and once you start to understand how to ask the right question, the manuals are exceedingly approachable.
+
+Note: I selected a theme that shipped with emacs 
+
+* Shortcut Prefixes and Keyboard Keys 
+Looks like =M-x= would would be the Meta Key plus the x key, or Pressing the Alt key on the keyboard then the x key on the keyboard. 
+A common way of showing this in the manual is with something like =C-x C-f (find-file)= which tells you the command "find-file" (that you can also invokve with =M-x find-file=), keyboard shortcut is Ctrl + x then Ctrl + f.
+Knowing the command being invoked by the shortcut is what helped me start to understand the shortcuts more, especially since when I first heard about them someone mentioned that the default shortcuts are to be understood in this other language type way of understanding (which was not useful for my first attempts at emacs years ago).
+
+| Name    | Symbol | Keyboard Key |
+|---------+--------+--------------|
+| Meta    | M      | Alt          |
+| Control | C      | Ctrl         |
+| Super   | S      | Windows      |
+| Shift   |        | Shift        |
+|         |        |              |
+
+
+
+
+* M-x - execute a command, or interactive function
+Common or useful commands to execute
+** =calendar=
+** =eshell=
+** =tetris=
+** =list-packages=
+** =dired= - a directory interation
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html][Dired Emacs Manual Page]]
+| dired function           | shortcut | description                                         |
+|--------------------------+----------+-----------------------------------------------------|
+| Quit                     | C-g      | Quits out of the current function or command        |
+|                          | g        | refreshes the buffer (showing new or deleted files) |
+| dired-flag-file-deletion | d        | Flags a file for deletion (with a D to the left)    |
+| dired-unmark             | u        | Removes the deletion flag                           |
+| dired-do-flagged-delete  | x        | deletes teh files flagged for deletion              |
+
+
+* Opening & Savings Files
+
+| Description                | Shortcut              |
+|----------------------------+-----------------------|
+| Open a file                | C-x C-f (find-file)   |
+| Saving open file           | C-x C-s (save-buffer) |
+| Saving to a different file | C-x C-w (write-file)  |
+|                            |                       |
+
+
+* Interacting with Text
+** Copying, Cutting, and Pasting (yank in emacs terminology)
+| Description   | Shortcut |
+|---------------+----------|
+| Copy selected | M-w      |
+| Cut selected  | C-w      |
+| Paste (yank)  | C-y      |
+
+** Selecting Text
+| Description                 | Shortcut |
+|-----------------------------+----------|
+| Mark beginning of selection | C-space  |
+
+
+* Buffers & Navigation
+** Buffers
+| Description            | Shortcut                 |
+|------------------------+--------------------------|
+| Switch Between Buffers | C-x b (switch-to-buffer) |
+| kill buffer            | C-x k (kill-buffer)      |
+
+** Windows
+| Description                        | Shortcut                        |
+|------------------------------------+---------------------------------|
+| Switch between windows             | C-x o [as in Oh] (other-window) |
+| Delete window                      | C-x 0 [zero] (delete-window)    |
+| Split window side-by-side          | C-x 3                           |
+| Split window top and bottom        | C-x 2                           |
+| Delete all windows except selected | C-x 1                           |
+
+
+* Org Mode
+[[https://orgmode.org/][Org Mode Main Website]]
+
+** Org Files
+| Description                         | Shortcut                               |
+|-------------------------------------+----------------------------------------|
+| Toggle the display of inline images | C-c C-x C-v (org-toggle-inline-images) |
+|                                     |                                        |
+
+** Agenda Files
+For the task information to be used in the default views, the file must be added to the agenda files.
+
+Set Directory to use for default agenda files in your =.emacs= file with
+#+BEGIN_SRC elisp
+  (setq org-agenda-files '("~/path-to-dir"))
+#+END_SRC
+
+
+| Description              | Shortcut                         |
+|--------------------------+----------------------------------|
+| Add to Agenda Files      | C-c [ (org-agenda-file-to-front) |
+| Remove from Agenda Files | C-c ] (org-remove-file)          |
+|                          |                                  |
+
+
+** TODOs
+| Description        | Shortcut           |
+|--------------------+--------------------|
+| Cycle TODO -> DONE | C-c C-t (org-todo) |
+|                    |                    |
+
+Note that the cycling from TODO to DONE depends on how you have your org task named and set up. With the default setup, this will turn a TODO into DONE.
+
+
+
+** TODO Update the html file and copy to website git page, then commit and push
+
+
+** Babel, Source Blocks, & Inline Code
+*** Inline Code
+- monospaced with text encapsulated by the equal sign '='
+- syntax highlighed with src_<lang>{<code here>}
+- like src_python{print("hello, world!")}
+- escape character is usually a zero width space inserted with =C-x 8 RET 200b=
+
+** Org Presentation with [[https://github.com/rlister/org-present/tree/4ec04e1b77dea76d7c30066ccf3200d2e0b7bee9][org-present-mode]]
+Need to install first. Available in MELPA.
+=M-x list-packages= then search for org-present.
+Mark to install with =i=. Then install with =x=. 
+In the org file you want to present from used =M-x org-present= to start, and =M-x org-present-quit= to quit it.
+
+
+
+** Exporting from Org
+[[https://orgmode.org/manual/Exporting.html][Org Mode Exporting]]
+If you want markdown support need to add to your =.emacs= file, =(require 'ox-md)=.
+
+| Description                    | Shortcut    |
+|--------------------------------+-------------|
+| Export from Org                | C-c C-e     |
+| Export to html and create file | C-c C-e h o |
+
+* Git and Magit
+
+** Basic Magit Usage
+| Description                           | Shortcut     |
+|---------------------------------------+--------------|
+| Clone a repo                          | magit-clone  |
+| Status of existing repo               | magit-status |
+| Once in magit mode, stage files       | s            |
+| once in magit, commit files           | c c          |
+| write the commit message and finalize | C-c C-c      |
+| Push files                            | P p          |
+
+** Magit Resources
+[[https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git][Mastering Emacs Intro to Magit]]
+[[https://magit.vc/manual/magit.html][Magit User Manual]]
