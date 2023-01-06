@@ -2,9 +2,13 @@
 #+AUTHOR: Acolyte Initiate Name Here
 #+DATE: 2023-01-05
 
+#+OPTIONS: tasks:nil
+
 
 * A Heading
 Some basic text here
+* DONE task here
+* PROJ task here
 
 ** A Subheading
 
@@ -12,7 +16,7 @@ Some basic text here
 
 *** An example below
 #+BEGIN_SRC python :results output :exports both
-print("Hello World")
+print("Hello DC864")
 x = 3
 y = 4
 z = x + y
@@ -20,6 +24,6 @@ print("x + y = " + str(z))
 #+END_SRC
 
 #+RESULTS:
-: Hello World
+: Hello DC864
 : x + y = 7
 
