@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-11-21 Mon 13:28 -->
+<!-- 2023-01-08 Sun 15:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Interactive &amp; Literate Programming</title>
@@ -201,16 +201,16 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org2f83b8c">1. Get Haskell Babel Working</a></li>
-<li><a href="#org40df155">2. Evaluating my first code inline</a></li>
-<li><a href="#orgd56ece1">3. Starting Literate Programming</a></li>
-<li><a href="#org1a174e2">4. Bonus - Babel as a Meta-Programming Language</a></li>
+<li><a href="#orgccdfb6d">1. Get Haskell Babel Working</a></li>
+<li><a href="#org18479f4">2. Evaluating my first code inline</a></li>
+<li><a href="#orge394913">3. Starting Literate Programming</a></li>
+<li><a href="#orgccff63c">4. Bonus - Babel as a Meta-Programming Language</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2f83b8c" class="outline-2">
-<h2 id="org2f83b8c"><span class="section-number-2">1.</span> Get Haskell Babel Working</h2>
+<div id="outline-container-orgccdfb6d" class="outline-2">
+<h2 id="orgccdfb6d"><span class="section-number-2">1.</span> Get Haskell Babel Working</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This seemed to be both easier and harder as I started getting more comfortable with emacs.
@@ -229,8 +229,8 @@ Still not sure what I did at the very end to change things but after I restarted
 </div>
 </div>
 
-<div id="outline-container-org40df155" class="outline-2">
-<h2 id="org40df155"><span class="section-number-2">2.</span> Evaluating my first code inline</h2>
+<div id="outline-container-org18479f4" class="outline-2">
+<h2 id="org18479f4"><span class="section-number-2">2.</span> Evaluating my first code inline</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I am going to print the standard "Hello, World!" output, then demonstrate a basic function.
@@ -245,8 +245,8 @@ doubleMe 9
 </div>
 </div>
 
-<div id="outline-container-orgd56ece1" class="outline-2">
-<h2 id="orgd56ece1"><span class="section-number-2">3.</span> Starting Literate Programming</h2>
+<div id="outline-container-orge394913" class="outline-2">
+<h2 id="orge394913"><span class="section-number-2">3.</span> Starting Literate Programming</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 According to <a href="https://en.wikipedia.org/wiki/Literate_programming">Wikipedia</a>, "Literate programming is writing out the program logic in a human language with included (separated by a primitive markup) code snippets and macros." This is something like above, where I can describe what I want to do in my native language, try to implement that action with the code, evaluate the code, and move on to the next task. Ideally, this would also help me return to the code later, and if it were to expand to a longer program, through the process of tangling, can create the source from the literate programming document.
@@ -259,6 +259,7 @@ Using Literate Programming can be useful for a number of things:
 <li>Haskell is semi-literate to begin with, meaning that it can natively compile the lierate extension with code blocks written in LaTeX and will ignore the LaTeX.</li>
 <li>Using a literate org file as the emacs initialization with the emacs lisp language</li>
 <li>Learning new programming languages and concepts in a notetaking style</li>
+<li><a href="http://howardism.org/Technical/Emacs/literate-programming-tutorial.html">Howardim's Literate Programming Tutorial</a> - helped me make sense of variables and block to block passing</li>
 </ul>
 
 <p>
@@ -272,8 +273,8 @@ Some potential applicatiosn I'm considering, but not sure of the feasibility:
 </div>
 
 
-<div id="outline-container-org1a174e2" class="outline-2">
-<h2 id="org1a174e2"><span class="section-number-2">4.</span> Bonus - Babel as a Meta-Programming Language</h2>
+<div id="outline-container-orgccff63c" class="outline-2">
+<h2 id="orgccff63c"><span class="section-number-2">4.</span> Bonus - Babel as a Meta-Programming Language</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 I found an interesting bit about Babel being a meta-programming language on the <a href="https://orgmode.org/worg/org-contrib/babel/intro.html">Babel Intro Page</a>. Specifically that output from one function in one language can be used for input into another function of a different language.
@@ -285,7 +286,7 @@ When I writing about the three different content interactions, consuming, intera
 <div id="postamble" class="status">
 <p class="date">Date: 2022 Nov 21</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="date">Created: 2022-11-21 Mon 13:28</p>
+<p class="date">Created: 2023-01-08 Sun 15:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

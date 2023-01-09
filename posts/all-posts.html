@@ -3,11 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-01-08 Sun 15:35 -->
+<!-- 2023-01-09 Mon 13:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Learning More Emacs</title>
-<meta name="author" content="Russell Brinson" />
+<title>All Blog Posts</title>
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -196,69 +195,153 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Learning More Emacs</h1>
+<h1 class="title">All Blog Posts</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8dc2a19">1. Emacs Cheat Sheet</a></li>
-<li><a href="#org36977ca">2. Taking on Org Mode for Productivity</a></li>
-<li><a href="#org9f151f5">3. Next Up for Haskell Learnings</a></li>
-<li><a href="#org0de0296">4. Updated 2023-01-08</a></li>
+<li><a href="#org23949e2">1. Overview</a></li>
+<li><a href="#orge7c148a">2. Write a python script that prints out all files as a result</a></li>
+<li><a href="#org625533f">3. Take this list and filter on for *.html files</a></li>
+<li><a href="#orge44c123">4. Convert html files to org links</a></li>
+<li><a href="#org8a160f1">5. The Final Code</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8dc2a19" class="outline-2">
-<h2 id="org8dc2a19"><span class="section-number-2">1.</span> Emacs Cheat Sheet</h2>
+<div id="outline-container-org23949e2" class="outline-2">
+<h2 id="org23949e2"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-During this round of trying to use emacs more, I decided to take physical notes on a few sheets a paper. This was a great reference to me (and will probably continue as I learn more modes). I transfered to a digital format using org mode, and making available to all. These have been what I've used the most for the past few weeks. Then to solidify my understand, converted it into a <code>.org</code> file and published as the <a href="../resources/emacs-cheatsheet.html">org-cheatsheet html page</a>.
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-org36977ca" class="outline-2">
-<h2 id="org36977ca"><span class="section-number-2">2.</span> Taking on Org Mode for Productivity</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-I'm not jumping into <a href="https://www.orgroam.com/">Org-roam</a> just yet but it is probably around the corner. I'm looking at putting the structure in place for my projects and next actions. The GTD way would have the next actions organized by context, but I always found that I needed the next actions by their project or horizon (or area if you are following <a href="https://fortelabs.com/blog/para/">P.A.R.A.</a>). With Org agenda views and basic tasks options, this should be easy to accomplish. Ultimately, I'm looking at recreating something like the Pillars Pipelines and Vaults that August Bradely uses in notion. While I like notion, I never can shake the feeling that it is non-free software which drives me away from it eventually.
+This page is a list of all blog posts on the site. It is created using literate programming in an Org File (albeit by a literate programming beginner). That pulls all files from a directory (and not directories), checks for html extention (really just 'l' for now), then converts to an Org mode links (so that I can export to html easier, which you are reading on).
 </p>
 
-<p>
-I'll need to put more systems design thought into this but my rough draft idea right now:
-</p>
 <ul class="org-ul">
-<li>keep most emacs files in a few short places like <code>~/org</code> for documents, notes, and learnings, <code>~/projects</code> for code projects that have git commits to this (question for anyone do you normally keep your git repos in your main org-mode directory, so your TODOs automatically are picked up in your projects?)</li>
-<li>Organize by P.A.R.A. and have this backed up somehow, I'm thinking git since it is all text, but git repos within git repos sounds weird (if I move my <code>~/projects</code> above into <code>~/org/projects</code>).</li>
-<li>Create a project template and next action workflow on paper with shortcuts for reference</li>
+<li>[+] List completed - # of files: 48</li>
+<li>[+] # of HTML files: 19</li>
+<li>[+] Converted 19 files into 19 valid links</li>
+<li><a href="./2022-03-06-cyber-news-of-week.html">2022-03-06 cyber news of week</a></li>
+<li><a href="./2022-03-13-cyber-news-of-week.html">2022-03-13 cyber news of week</a></li>
+<li><a href="./2022-05-25-basic-ad-enum-on-wire.html">2022-05-25 basic ad enum on wire</a></li>
+<li><a href="./2022-11-01-blogkickoff.html">2022-11-01 blogkickoff</a></li>
+<li><a href="./2022-11-02-basic-functional-arguments.html">2022-11-02 basic functional arguments</a></li>
+<li><a href="./2022-11-03-haskell-first-steps.html">2022-11-03 haskell first steps</a></li>
+<li><a href="./2022-11-04-state-of-progress.html">2022-11-04 state of progress</a></li>
+<li><a href="./2022-11-20-taking-on-emacs.html">2022-11-20 taking on emacs</a></li>
+<li><a href="./2022-11-21-interactive-code.html">2022-11-21 interactive code</a></li>
+<li><a href="./2022-11-22-emacs-learnings.html">2022-11-22 emacs learnings</a></li>
+<li><a href="./2022-11-23-Haskell-LP-Budget.html">2022-11-23 Haskell LP Budget</a></li>
+<li><a href="./2022-11-24-thanksgiving-update.html">2022-11-24 thanksgiving update</a></li>
+<li><a href="./2022-11-25-publishing-with-org.html">2022-11-25 publishing with org</a></li>
+<li><a href="./2022-11-26-revisiting-dockworker.html">2022-11-26 revisiting dockworker</a></li>
+<li><a href="./2022-11-27-budget-template-p2.html">2022-11-27 budget template p2</a></li>
+<li><a href="./2022-11-28-budget-template-p3.html">2022-11-28 budget template p3</a></li>
+<li><a href="./2022-11-29-security-tools.html">2022-11-29 security tools</a></li>
+<li><a href="./2022-11-30-november-recap.html">2022-11-30 november recap</a></li>
+<li><a href="./2022-12-05-learning-nim.html">2022-12-05 learning nim</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9f151f5" class="outline-2">
-<h2 id="org9f151f5"><span class="section-number-2">3.</span> Next Up for Haskell Learnings</h2>
-<div class="outline-text-2" id="text-3">
+
+
+
+<div id="outline-container-orge7c148a" class="outline-2">
+<h2 id="orge7c148a"><span class="section-number-2">2.</span> Write a python script that prints out all files as a result</h2>
+<div class="outline-text-2" id="text-2">
 <p>
-Since the cheatsheet and adoption of emacs this time has gone so well, I'm just now picking back up Haskell and my first task is to use Literate Programming to pass variables into the Haskell code. From here, adding up everything and comparing to another column of data. This will be the basis of learning for my monthly budget org template.
+Modified from <a href="https://stackoverflow.com/a/3207973">Stack Overflow Answer on How do I list all files of a directory</a>. I set the path to the local path since that is where all of the blogs posts are stored. This should filter out any directories that may exist in the future.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-python" id="orgbd62f18">from os import listdir
+from os.path import isfile, join
+
+mypath = "./"
+
+onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+## enter length of directory!
+print("- [+] List completed - # of files: {}".format(len(onlyfiles))) 
+
+</pre>
+</div>
+
+<pre class="example">
+- [+] List completed - # of files: 48
+</pre>
 </div>
 </div>
 
-<div id="outline-container-org0de0296" class="outline-2">
-<h2 id="org0de0296"><span class="section-number-2">4.</span> Updated 2023-01-08</h2>
-<div class="outline-text-2" id="text-4">
+
+<div id="outline-container-org625533f" class="outline-2">
+<h2 id="org625533f"><span class="section-number-2">3.</span> Take this list and filter on for *.html files</h2>
+<div class="outline-text-2" id="text-3">
 <p>
-Updated emacs cheatsheet link to the new location, as well as clarified it is an emacs cheatsheet and not an Org cheatsheet.
+While the <code>'l'</code> in html may not be the only extention that ends with <code>'l'</code> in existence. It is good enough for my personal blog. The risk of a potential inclusion with another extension that ends in <code>'l'</code> is acceptable. This is similar to the risk I'm accepting with only parsing for dates at the beginning, and exluding this file starting with <code>'a'</code>. 
 </p>
+
+<div class="org-src-container">
+<pre class="src src-python" id="org4402df5">htmlList = []
+for line in onlyfiles:
+  if (line[-1] == 'l') and (line[0] != 'a'):
+    htmlList.append(line)
+
+print("- [+] # of HTML files: {}".format(len(htmlList)))
+</pre>
+</div>
+
+<pre class="example">
+- [+] # of HTML files: 19
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge44c123" class="outline-2">
+<h2 id="orge44c123"><span class="section-number-2">4.</span> Convert html files to org links</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-python" id="orgb533e31">blogPostLinks = []  
+for line in htmlList:
+  getDate = line[:10]
+  getTitle = line[11:-5]
+  cleanTitle = getTitle.replace("-", " ")
+  orgLink = "- [[file:./" + line + "][" + getDate + " " + cleanTitle + "]]"
+  blogPostLinks.append(orgLink)
+
+print("- [+] Converted {} files into {} valid links".format(len(htmlList), len(blogPostLinks)))
+</pre>
+</div>
+
+<pre class="example">
+- [+] Converted 19 files into 19 valid links
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org8a160f1" class="outline-2">
+<h2 id="org8a160f1"><span class="section-number-2">5.</span> The Final Code</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Note, the actual code block below has been modified to show the text that the header will execute. You should be able to recreate using the visual header below, and the code below, along with all of the code block (except Overview) above, named how they are named between the <code>&lt;&lt;import-here&gt;&gt;</code> in order. 
+</p>
+
+<p>
+<code class="src src-ORG">#+BEGIN _SRC python :results output raw :exports results :noweb yes :tangle yes</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&lt;&lt;file-list&gt;&gt;
+&lt;&lt;html-filter&gt;&gt;
+&lt;&lt;org-links&gt;&gt;
+for line in blogPostLinks:
+  print(line)
+</pre>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022-11-22</p>
-<p class="author">Author: Russell Brinson</p>
-<p class="date">Created: 2023-01-08 Sun 15:35</p>
+<p class="date">Created: 2023-01-09 Mon 13:25</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
