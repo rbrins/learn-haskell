@@ -197,8 +197,8 @@
 <div id="content" class="content">
 <h1 class="title">Installing Spellcheck in Emacs on Windows</h1>
 
-<div id="outline-container-orga974065" class="outline-2">
-<h2 id="orga974065"><span class="section-number-2">1.</span> Overview</h2>
+<div id="outline-container-orgcad415a" class="outline-2">
+<h2 id="orgcad415a"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Getting emacs on windows to work with spellcheck was weird, especially from a beginner to emacs and as someone who usually relies on spellcheck "just working".
@@ -210,8 +210,8 @@ This involved installing the utility itself, ensuring the dictionaries were inst
 </div>
 </div>
 
-<div id="outline-container-orgb5539ee" class="outline-2">
-<h2 id="orgb5539ee"><span class="section-number-2">2.</span> Install Hunspell</h2>
+<div id="outline-container-org92fe7b4" class="outline-2">
+<h2 id="org92fe7b4"><span class="section-number-2">2.</span> Install Hunspell</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Tried with Chocolately first, it did install but didn't seem to come with any dictionaries. Then moved on to installing through <a href="https://www.msys2.org/">MSYS2</a>. This was just as simple and providing a binary than when ran with the <code>-D</code> flag, showed the <code>en_US</code> dictionary. 
@@ -220,8 +220,8 @@ Tried with Chocolately first, it did install but didn't seem to come with any di
 </div>
 
 
-<div id="outline-container-org9f6a068" class="outline-2">
-<h2 id="org9f6a068"><span class="section-number-2">3.</span> Setting the LANG Environment Variable</h2>
+<div id="outline-container-org3ff0cf9" class="outline-2">
+<h2 id="org3ff0cf9"><span class="section-number-2">3.</span> Setting the LANG Environment Variable</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 After installing Hunspell, it kept returning the error
@@ -233,23 +233,23 @@ As far as I can tell, all that is needed to get Hunspell working only in emacs i
 </p>
 
 <p>
-In order to do this on windows you would use the systems configuration which I did originally thinking the utility when called would use that variable (it doesn't seem like it). Here is how you do this incase you need the utility at the command line level within windows. 
+In order to do this on windows you would use the systems configuration which I did originally thinking the utility when called would use that variable (it doesn't seem like it). Here is how you do this encase you need the utility at the command line level within windows. 
 </p>
 
 
-<div id="org24b5119" class="figure">
+<div id="org9c9c745" class="figure">
 <p><img src="../img/hunspell-install-00.png" alt="hunspell-install-00.png" />
 </p>
 </div>
 
 
-<div id="org830dc58" class="figure">
+<div id="org7cf3a6d" class="figure">
 <p><img src="../img/hunspell-install-01.png" alt="hunspell-install-01.png" />
 </p>
 </div>
 
 
-<div id="orgdbfbe98" class="figure">
+<div id="org6def996" class="figure">
 <p><img src="../img/hunspell-install-02.png" alt="hunspell-install-02.png" />
 </p>
 </div>
@@ -257,8 +257,8 @@ In order to do this on windows you would use the systems configuration which I d
 </div>
 
 
-<div id="outline-container-org02656b0" class="outline-2">
-<h2 id="org02656b0"><span class="section-number-2">4.</span> Configuring in .emacs</h2>
+<div id="outline-container-org9da73e9" class="outline-2">
+<h2 id="org9da73e9"><span class="section-number-2">4.</span> Configuring in .emacs</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Then to ensure you are setting up emacs to use hunspell we can add some configuration changes to our <code>.emacs</code> file.
