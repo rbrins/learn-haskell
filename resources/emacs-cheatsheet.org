@@ -102,7 +102,7 @@ Common or useful commands to execute
 For the task information to be used in the default views, the file must be added to the agenda files.
 
 Set Directory to use for default agenda files in your =.emacs= file with
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports code
   (setq org-agenda-files '("~/path-to-dir"))
 #+END_SRC
 
@@ -131,8 +131,8 @@ Note that the cycling from TODO to DONE depends on how you have your org task na
 *** Babel
 *** Inline Code
 - monospaced with text encapsulated by the equal sign '='
-- syntax highlighed with src_<lang>{<code here>}
-- like src_python{print("hello, world!")}
+- syntax highlighed with src_ <lang>{<code here>}
+- like src_ python{print("hello, world!")}
 - escape character is usually a zero width space inserted with =C-x 8 RET 200b=
 
 ** Org Presentation with [[https://github.com/rlister/org-present/tree/4ec04e1b77dea76d7c30066ccf3200d2e0b7bee9][org-present-mode]]
@@ -165,5 +165,5 @@ If you want markdown support need to add to your =.emacs= file, =(require 'ox-md
 | Push files                            | P p          |
 
 ** Magit Resources
-[[https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git][Mastering Emacs Intro to Magit]]
-[[https://magit.vc/manual/magit.html][Magit User Manual]]
+- [[https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git][Mastering Emacs Intro to Magit]]
+[[https://magit.vc/manual/magit.html][- Magit User Manual]]
