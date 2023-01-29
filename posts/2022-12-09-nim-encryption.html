@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rbrins' Blog</title>
+<title>Nim Encryption &amp; Decryption</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -195,77 +195,137 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">rbrins' Blog</h1>
+<h1 class="title">Nim Encryption &amp; Decryption</h1>
 
-<div id="outline-container-org523d0aa" class="outline-2">
-<h2 id="org523d0aa">Hi</h2>
-<div class="outline-text-2" id="text-org523d0aa">
+<div id="outline-container-org001c25d" class="outline-2">
+<h2 id="org001c25d"><span class="section-number-2">1.</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
 <p>
-My name is Russell Brinson, I'm a information security professional, free and open source software advocate, and privacy enthusiast.
-Currently, I'm learning nim and better malware emulation. In the near future, I'll begin work on my personal red teaming wiki as I go through the Red Team Ops I course again (this wiki currently lives in notion and will need to be migrated).
+For any responsible red teamer, encryption needs to be apart of your workflow. Whether it is encrypting a session with potentially sensitive information going across the wire or encrypting your shellcode, encryption is constantly used on assessments. 
+</p>
+
+<p>
+And what better way to learn about the encrypting libraries of a programming language than to read the docs and incorporate into our basic reverse shell. Which is what we are doing today.
+</p>
+
+<ul class="org-ul">
+<li>encrypting the commands we send to our reverse shell</li>
+<li>decrypting the commands on the reverse shell</li>
+<li>encrypting the output results from the reverse shell before sending</li>
+<li>decrypting the results on the server before displaying</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org12bc565" class="outline-2">
+<h2 id="org12bc565"><span class="section-number-2">2.</span> Nimcrypto Library</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Using the Nimcrypto Library, I went with using a string instead of bytes since was a bit easier for me to understand initially. First, created the aesCrypto.nim file that included the <code>encryptStr</code> and <code>decryptStr</code> functions that my other programs can pull from, helping keep things clean and segmented. This functions then follow what was outlined in the Nimcrypto repos.
+</p>
+<div class="org-src-container">
+<pre class="src src-nim">proc encryptStr*(data2encr, enckey, uniqueiv: string): string = 
+  var
+    ectx: CTR[aes256]
+    key = newString(aes256.sizeKey)
+    iv = newString(aes256.sizeBlock)
+    plainText = newString(len(data2encr))
+    encText = newString(len(data2encr))
+
+  copyMem(addr plainText[0], unsafeaddr data2encr[0], len(data2encr))
+  copyMem(addr key[0], unsafeaddr enckey[0], len(enckey))
+  copyMem(addr iv[0], unsafeaddr uniqueiv[0], len(uniqueiv))
+
+  ectx.init(key, iv)
+  ectx.encrypt(plainText, encText)
+  ectx.clear
+
+  echo "ENCRYPTED TEXT: ", encText
+  result = encText
+
+proc decryptStr*(data2decr, enckey, uniqueiv: string): string = 
+  var
+    dctx: CTR[aes256]
+    key = newString(aes256.sizeKey)
+    iv = newString(aes256.sizeBlock)
+    plainText = newString(len(data2decr))
+    encText = newString(len(data2decr))
+
+
+  copyMem(unsafeaddr encText[0], unsafeaddr data2decr[0], len(data2decr))
+  copyMem(unsafeaddr key[0], unsafeaddr enckey[0], len(enckey))
+  copyMem(unsafeaddr iv[0], unsafeaddr uniqueiv[0], len(uniqueiv))
+
+  dctx.init(key, iv)
+  dctx.decrypt(encText, plainText)
+  dctx.clear
+
+  echo "DECRYPTED TEXT: ", plainText
+  result = plainText
+
+</pre>
+</div>
+
+
+<p>
+Once there were linked to the server.nim and only for testing purposes, hardcoded my passkey and passIV. I'm not sure yet how I would handle a symmetric password with a server/client model but considering pki. Then using the functions defined above put these are either side of the sending and receive commands. Again on the OpSec side of things, I'd like to dig more into terminal histories and if this get logged from a console app. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nim">while true:
+  stdout.write("&gt; ")
+  let command: string = stdin.readLine()
+
+  let encCommand = encryptStr(command, passedKey, passedIV)
+
+
+  client.send(encCommand &amp; "\n")
+  let response: string = client.recvLine()
+  echo "Server: Agent's Response: ", response
+
+</pre>
+</div>
+<p>
+Note the server doesn't currently decrypt on the response (because I'm not encrypting the response when sending from the client). This is fine for testing but will need to change in any sore of production reverse shell.
+</p>
+
+<p>
+On the client side to decrypt the command.
+</p>
+<div class="org-src-container">
+<pre class="src src-nim">while true:
+  let encCommand: string = client.recvLine()
+
+  let command = decryptStr(encCommand, passedKey, passedIV)
+
+  if command == "":
+      break
+
+  stdout.writeLine("Agent: received command: ", command)
+
+</pre>
+</div>
+
+<p>
+Overall this was a fun exercise in trying to secure the reverse shell a bit more. Also, windows defender doesn't detect this as malicious.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga2caaee" class="outline-2">
-<h2 id="orga2caaee">Blog Posts</h2>
-<div class="outline-text-2" id="text-orga2caaee">
+<div id="outline-container-org44b64e7" class="outline-2">
+<h2 id="org44b64e7"><span class="section-number-2">3.</span> Resources</h2>
+<div class="outline-text-2" id="text-3">
 <ul class="org-ul">
-<li><a href="./posts/2023-01-24-pivot-lab-setup.html">2023-01-24 Pivoting Lab Setup using Vagrant</a></li>
-<li><a href="./posts/2023-01-09-Looking-into-the-new-year.html">2023-01-09 Looking into the New Year</a></li>
-<li><a href="./posts/2022-12-09-nim-encryption.html">2022-12-09 Encrypting with Nim</a></li>
-<li><a href="./posts/2022-12-05-learning-nim.html">2022-12-05 Learning Nim - Parsing CMD Arguments</a></li>
-<li><a href="./posts/2022-11-30-november-recap.html">2022-11-30 November Recap</a></li>
-<li><a href="./posts/2022-11-29-security-tools.html">2022-11-29 Security Tools</a></li>
-<li><a href="./posts/2022-11-28-budget-template-p3.html">2022-11-28 Budget Template Part 3</a></li>
-<li><a href="./posts/2022-11-27-budget-template-p2.html">2022-11-27 Budgeting with Org Part 2</a></li>
-<li><a href="./posts/2022-11-26-revisiting-dockworker.html">2022-11-26 Revisiting Dock Worker</a></li>
-<li><a href="./posts/2022-11-25-publishing-with-org.html">2022-11-25 Publishing with Org</a></li>
-<li><a href="posts/2022-11-24-thanksgiving-update.html">2022-11-24 Happy Thanksgiving</a></li>
-<li><a href="posts/2022-11-23-Haskell-LP-Budget.html">2022-11-23 Budgeting with Literate Programming and Haskell Part 1</a></li>
-<li><a href="posts/2022-11-22-emacs-learnings.html">2022-11-22 Learning More Emacs</a></li>
-<li><a href="posts/2022-11-21-interactive-code.html">2022-11-21 Interactive &amp; Literate Programming</a></li>
-<li><a href="posts/2022-11-20-taking-on-emacs.html">2022-11-20 Taking on Emacs</a></li>
-<li><a href="./posts/all-posts.html">All posts</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org0726a00" class="outline-2">
-<h2 id="org0726a00">Resources</h2>
-<div class="outline-text-2" id="text-org0726a00">
-<ul class="org-ul">
-<li><a href="resources/emacs-cheatsheet.html">My emacs cheatsheet - HTML</a></li>
-<li><a href="resources/emacs-cheatsheet.html">My emacs cheatsheet - ORG</a></li>
-<li><a href="https://github.com/rbrins/security-tools">My cyber security tools</a></li>
-<li><a href="./resources/budget-template.html">My Org Budget Template</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org253d3d3" class="outline-2">
-<h2 id="org253d3d3">Presentations</h2>
-<div class="outline-text-2" id="text-org253d3d3">
-<ul class="org-ul">
-<li><a href="https://rbrins.github.io/presentations/2023-01-church-of-emacs.html">2023-01-05 Church of Emacs</a> - An Emacs beginner showing others how to get started if they faced the same hurdles I initially did. With fun takes like poems generated about emacs from ChatGPT. It was originally presented from the <code>.org</code> file using <a href="https://melpa.org/#/org-present">org-present</a>.</li>
-<li><a href="./presentations/incident-nonresponse.pdf">2022-11-03 Incident Nonresponse - PDF</a> / <a href="https://www.youtube.com/watch?v=Kp8GKinarMo">Presentation Video</a> - A fun presentation that show cases what not to do in incident response, taken and heavily modified from previous experience and stories from others. It included a custom game of chao where individuals are assigned roles within an organization, a security event occurs, and chaos ensues as the organization attempts to response to the issue.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org1a3173e" class="outline-2">
-<h2 id="org1a3173e">Profiles</h2>
-<div class="outline-text-2" id="text-org1a3173e">
-<ul class="org-ul">
-<li><a rel="me" href="https://fosstodon.org/@rbrins">Mastodon</a></li>
+<li><a href="https://github.com/byt3bl33d3r/OffensiveNim">Offensive Nim</a></li>
+<li><a href="https://github.com/cheatfate/nimcrypto">nimcrypto</a></li>
+<li><a href="https://web.archive.org/web/20210309124940/https://ilankalendarov.github.io/posts/nim-ransomware/">Nim Ransomware</a></li>
 </ul>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2022 Nov 21</p>
+<p class="date">Date: 2022-12-09</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
 </div>
 </body>
 </html>
