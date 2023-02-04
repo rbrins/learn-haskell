@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Doom Migration Notes</title>
+<meta name="author" content="Russell Brinons"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/home/rbrins/.emacs.d/.local/straight/build-28.2/revealjs/dist/reveal.css"/>
+
+<link rel="stylesheet" href="/home/rbrins/.emacs.d/.local/straight/build-28.2/revealjs/dist/theme/black.css" id="theme"/>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Doom Migration Notes</h1><h2 class="author">Russell Brinons</h2><h2 class="date">2023-01-29 Sun 00:00</h2>
+</section>
+
+<section>
+<section id="slide-1">
+<h2 id="1"><span class="section-number-2">1.</span> First Impressions</h2>
+<p>
+Started with a clean install since my <code>.emacs</code> file from windows wasn&rsquo;t working right and I was tired of fighting it.
+In my normal workflow of typing in org files I&rsquo;ve noticed that it does something that I would have preferred out of the box with emacs on windows (and eventually tried to do in one way or another).
+</p>
+<ol>
+<li>auto-indentation doesn&rsquo;t suck</li>
+<li>Spellcheck works and offers auto-completions which is NICE</li>
+<li>when I created a new org file, it pasted the <code>#+title</code> in the first line for me. (note to self, find this and add more to it)</li>
+
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-2">
+<h2 id="2"><span class="section-number-2">2.</span> Config Files</h2>
+<p>
+From the main page of doom emacs
+</p>
+<blockquote>
+<p>
+You can configure Doom by tweaking the files found in your DOOMDIR. Doom expects this directory to be found in one of:
+</p>
+
+<p>
+~/.config/doom (respects $XDG<sub>CONFIG</sub><sub>HOME</sub>)
+or ~/.doom.d
+</p>
+</blockquote>
+</section>
+<section id="slide-2-1">
+<h3 id="2-1"><span class="section-number-3">2.1.</span> doom config files</h3>
+<p>
+if we look in the <code>~/.doom.d</code> we find the trifecta of doom config files.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span style="color: #ECBE7B;">ls</span> ~/.doom.d
+<span style="color: #ECBE7B;">ls</span> ~/.config/doom
+</pre>
+</div>
+<p>
+config.el
+init.el
+packages.el
+</p>
+
+<p>
+ls: cannot access &rsquo;<i>home/rbrins</i>.config/doom&rsquo;: No such file or directory
+</p>
+
+</section>
+<section id="slide-2-2">
+<h3 id="2-2"><span class="section-number-3">2.2.</span> or ~/.config files</h3>
+<p>
+I&rsquo;ll use the <code>~/.doom.d</code> directory for now but eventually want to start storing my config files in <code>~/.config/</code> as I get more use to linux as my daily driver.
+Either way, according to the config information page, <code>init.el</code> is for modules, <code>config.el</code> is for the private customization, and <code>packages.el</code> is for installing the packages. It explicitly mentions not using the <code>customize</code> in default which is nice considering I was fighting that so often.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-3">
+<h2 id="3"><span class="section-number-2">3.</span> Preconfigured Canvas</h2>
+<p>
+I saw a reddit comment that mentioned that vanilla emacs was a blank canvas, spacemacs was the canvas painted by the community and ever growing, and doom emacs was a canvas with a little started on the canvas and currated tools. This is very apt for what I&rsquo;ve seen from doom so far and enjoy it.
+</p>
+
+<p>
+This has helped me adopt org-agenda and org-roam much faster than I was adopting before since it has the bindings and auto-completion already existing for these packages.
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="/home/rbrins/.emacs.d/.local/straight/build-28.2/revealjs/dist/reveal.js"></script>
+<script src="/home/rbrins/.emacs.d/.local/straight/build-28.2/revealjs/plugin/markdown/markdown.js"></script>
+<script src="/home/rbrins/.emacs.d/.local/straight/build-28.2/revealjs/plugin/notes/notes.js"></script>
+<script src="/home/rbrins/.emacs.d/.local/straight/build-28.2/revealjs/plugin/search/search.js"></script>
+<script src="/home/rbrins/.emacs.d/.local/straight/build-28.2/revealjs/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+
+transition: 'convex',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+});
+</script>
+</body>
+</html>
