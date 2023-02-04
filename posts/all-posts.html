@@ -197,17 +197,17 @@
 <div id="content" class="content">
 <h1 class="title">All Blog Posts</h1>
 
-<div id="outline-container-orga192fa8" class="outline-2">
-<h2 id="orga192fa8"><span class="section-number-2">1.</span> Overview</h2>
+<div id="outline-container-org8ac8294" class="outline-2">
+<h2 id="org8ac8294"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This page is a list of all blog posts on the site. It is created using literate programming in an Org File (albeit by a literate programming beginner). That pulls all files from a directory (and not directories), checks for html extention (really just 'l' for now), then converts to an Org mode links (so that I can export to html easier, which you are reading on).
 </p>
 
 <ul class="org-ul">
-<li>[+] List completed - # of files: 59</li>
-<li>[+] # of HTML files: 22</li>
-<li>[+] Converted 22 files into 22 valid links</li>
+<li>[+] List completed - # of files: 66</li>
+<li>[+] # of HTML files: 24</li>
+<li>[+] Converted 24 files into 24 valid links</li>
 <li><a href="./2022-03-06-cyber-news-of-week.html">2022-03-06 cyber news of week</a></li>
 <li><a href="./2022-03-13-cyber-news-of-week.html">2022-03-13 cyber news of week</a></li>
 <li><a href="./2022-05-25-basic-ad-enum-on-wire.html">2022-05-25 basic ad enum on wire</a></li>
@@ -227,9 +227,11 @@ This page is a list of all blog posts on the site. It is created using literate 
 <li><a href="./2022-11-29-security-tools.html">2022-11-29 security tools</a></li>
 <li><a href="./2022-11-30-november-recap.html">2022-11-30 november recap</a></li>
 <li><a href="./2022-12-05-learning-nim.html">2022-12-05 learning nim</a></li>
+<li><a href="./2022-12-09-nim-encryption.html">2022-12-09 nim encryption</a></li>
 <li><a href="./2023-01-08-installing-spellcheck-emacs.html">2023-01-08 installing spellcheck emacs</a></li>
 <li><a href="./2023-01-09-Looking-into-the-new-year.html">2023-01-09 Looking into the new year</a></li>
 <li><a href="./2023-01-24-pivot-lab-setup.html">2023-01-24 pivot lab setup</a></li>
+<li><a href="./2023-02-02-pivoting.html">2023-02-02 pivoting</a></li>
 </ul>
 </div>
 </div>
@@ -237,15 +239,15 @@ This page is a list of all blog posts on the site. It is created using literate 
 
 
 
-<div id="outline-container-orga5ad59e" class="outline-2">
-<h2 id="orga5ad59e"><span class="section-number-2">2.</span> Write a python script that prints out all files as a result</h2>
+<div id="outline-container-org78ef5bb" class="outline-2">
+<h2 id="org78ef5bb"><span class="section-number-2">2.</span> Write a python script that prints out all files as a result</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Modified from <a href="https://stackoverflow.com/a/3207973">Stack Overflow Answer on How do I list all files of a directory</a>. I set the path to the local path since that is where all of the blogs posts are stored. This should filter out any directories that may exist in the future.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python" id="org67e7f47">from os import listdir
+<pre class="src src-python" id="org3c6c9b6">from os import listdir
 from os.path import isfile, join
 
 mypath = "./"
@@ -259,21 +261,21 @@ print("- [+] List completed - # of files: {}".format(len(onlyfiles)))
 </div>
 
 <pre class="example">
-- [+] List completed - # of files: 59
+- [+] List completed - # of files: 66
 </pre>
 </div>
 </div>
 
 
-<div id="outline-container-org26739f6" class="outline-2">
-<h2 id="org26739f6"><span class="section-number-2">3.</span> Take this list and filter on for *.html files</h2>
+<div id="outline-container-org87dd3dc" class="outline-2">
+<h2 id="org87dd3dc"><span class="section-number-2">3.</span> Take this list and filter on for *.html files</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 While the <code>'l'</code> in html may not be the only extention that ends with <code>'l'</code> in existence. It is good enough for my personal blog. The risk of a potential inclusion with another extension that ends in <code>'l'</code> is acceptable. This is similar to the risk I'm accepting with only parsing for dates at the beginning, and exluding this file starting with <code>'a'</code>. 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python" id="orgc487ec7">htmlList = []
+<pre class="src src-python" id="orge1d18e1">htmlList = []
 for line in onlyfiles:
   if (line[-1] == 'l') and (line[0] != 'a'):
     htmlList.append(line)
@@ -283,16 +285,16 @@ print("- [+] # of HTML files: {}".format(len(htmlList)))
 </div>
 
 <pre class="example">
-- [+] # of HTML files: 22
+- [+] # of HTML files: 24
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org3dc10c2" class="outline-2">
-<h2 id="org3dc10c2"><span class="section-number-2">4.</span> Convert html files to org links</h2>
+<div id="outline-container-org0821530" class="outline-2">
+<h2 id="org0821530"><span class="section-number-2">4.</span> Convert html files to org links</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-src-container">
-<pre class="src src-python" id="org0263914">blogPostLinks = []  
+<pre class="src src-python" id="org6d5e48f">blogPostLinks = []  
 for line in htmlList:
   getDate = line[:10]
   getTitle = line[11:-5]
@@ -305,13 +307,13 @@ print("- [+] Converted {} files into {} valid links".format(len(htmlList), len(b
 </div>
 
 <pre class="example">
-- [+] Converted 22 files into 22 valid links
+- [+] Converted 24 files into 24 valid links
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org4319019" class="outline-2">
-<h2 id="org4319019"><span class="section-number-2">5.</span> The Final Code</h2>
+<div id="outline-container-org117b6fa" class="outline-2">
+<h2 id="org117b6fa"><span class="section-number-2">5.</span> The Final Code</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Note, the actual code block below has been modified to show the text that the header will execute. You should be able to recreate using the visual header below, and the code below, along with all of the code block (except Overview) above, named how they are named between the <code>&lt;&lt;import-here&gt;&gt;</code> in order. 
