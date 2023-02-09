@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-02-09 Thu 00:13 -->
+<!-- 2023-02-09 Thu 12:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Figuring out Python Subcommands with ArgParse</title>
@@ -198,26 +198,24 @@
 <div id="content" class="content">
 <h1 class="title">Figuring out Python Subcommands with ArgParse</h1>
 
-<div id="outline-container-org7cc70d5" class="outline-2">
-<h2 id="org7cc70d5"><span class="section-number-2">1.</span> Overview</h2>
+<div id="outline-container-org88a209b" class="outline-2">
+<h2 id="org88a209b"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-While watching <a href="https://www.twitch.tv/mttaggart">mttaggart</a> from <a href="https://taggartinstitute.org/">The Taggart Institute</a> stream is programming on KASM manager with python, he ran into a question that has haunted me before and if answer, would certainly help me with other projects. That question is roughly, how the heck does one tackle subcommands with the built-in library of argparse in python. Taggart eventually went with <a href="https://click.palletsprojects.com/en/8.1.x/">click</a> as a package for "beautiful command line interfaces".
+While watching <a href="https://taggartinstitute.org/">The Taggart Institute's</a> <a href="https://www.twitch.tv/mttaggart">mttaggart</a> stream on programming a KASM manager with python, he ran into a question on how subcommands with argparse work. This has haunted me before, and if answered would certainly help me with other projects. Taggart eventually used <a href="https://click.palletsprojects.com/en/8.1.x/">click</a>, a package for "beautiful command line interfaces", to handle his subcommand and argument parsing needs.
 </p>
 
 <p>
-Currently I have a python project I'd like to use the subcommand of "load" or "unload" with it that both have different arguments associated with it. This example, rant, and hopeful proof-of-concept will help in utilizing subcommands. Specifically, this is for adversary emulation within a devops environment that is confirmed to have the python docker sdk but no other non-standard module assumptions.
+Currently I have a python project I'd like to use subcommands of either "load" or "unload". With which each would have different arguments associated with the subcommand. This example, rant, and hopeful proof-of-concept will help in utilizing subcommands using argparse. Specifically, this is for adversary emulation within a devops environment that is confirmed to have the python docker sdk but no other non-standard module or library assumptions.
 </p>
 </div>
 </div>
 
-
-
-<div id="outline-container-orgd096924" class="outline-2">
-<h2 id="orgd096924"><span class="section-number-2">2.</span> The Setup</h2>
+<div id="outline-container-orgc4829df" class="outline-2">
+<h2 id="orgc4829df"><span class="section-number-2">2.</span> The Setup</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-This is just utilizing the <a href="https://docs.python.org/dev/library/argparse.html">argparse module</a>, to create two global variable values.
+This is just utilizing the <a href="https://docs.python.org/dev/library/argparse.html">argparse module</a>, to create the program's global variable values. The global program arguments act as regular arguments in argparse, can have default values, actions, help menu context, and typing. In my case below, I need to pass some information about the docker registry, repository authentication, and dockerclient regardless if I'm utilizing the load or unload subcommands.
 </p>
 
 <div class="org-src-container">
@@ -236,11 +234,11 @@ parser.add_argument('--DockerClient', help="The docker socket to use that you ha
 </div>
 </div>
 
-<div id="outline-container-orge06a1c0" class="outline-2">
-<h2 id="orge06a1c0"><span class="section-number-2">3.</span> Subparsers, subcommands, and their subarguments</h2>
+<div id="outline-container-org7d8e17e" class="outline-2">
+<h2 id="org7d8e17e"><span class="section-number-2">3.</span> Subparsers, subcommands, and their subarguments</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-Next we want to start the subparsers pointing to the <code>subcommand</code>, note that this is what python will use when describing if you print the object, I also use the <code>title</code> parameter so that it shows up in <code>-h</code>. We do this with the <code>parser</code> above and running the <code>add_subparsers</code> method on it. Then we can continue by adding arguments to the subparsers, like we did with the global arguments.
+Next we want to start the subparsers pointing to the <code>subcommand</code>, note that this is what python will use when describing if you print the object. I also use the <code>title</code> parameter so that it shows up in <code>--help</code>. We do this with the <code>parser</code> object from above and running the <code>add_subparsers</code> method on it. Once the <code>add_subparsers</code> method has ran, we need to define the new parsers that will be the "subcommands", in this case using the <code>add_parser</code> method on the returned <code>add_subparsers</code> object stored in <code>subcommand_parser</code>.
 </p>
 
 <div class="org-src-container">
@@ -251,8 +249,8 @@ unload_parser = subcommand_parser.add_parser('unload')
 </pre>
 </div>
 
-
 <p>
+After these subcommand parsers are defined, we can continue by adding arguments to the subparsers, like we did with the global arguments.
 Next is adding arguments specific to our subcommands with the <code>add_argument</code> method of the specific subcommand. We can see that unload doesn't have any additional arguments and load has two additional arguments.
 </p>
 
@@ -269,18 +267,18 @@ load_parser.add_argument('--dockerFile', help="Specify a specific dockerfile loc
 </div>
 </div>
 
-<div id="outline-container-org5fd122a" class="outline-2">
-<h2 id="org5fd122a"><span class="section-number-2">4.</span> Conclusion</h2>
+<div id="outline-container-org1b43a27" class="outline-2">
+<h2 id="org1b43a27"><span class="section-number-2">4.</span> Conclusion</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>I'm definitely more comfortable with subcommands now and pretty much finished my initial use case in this post.</li>
-<li>If you wanted to add further subcommands, it would be as simple as adding another <code>add_subparsers</code> to the <code>subcommand_parser</code> object.</li>
+<li>If you wanted to add further subcommands, it would be as simple as adding another layer of <code>add_subparsers</code> to the <code>subcommand_parser.add_parser</code> objects (e.g. <code>load-subcommand_parse = load.parser.add_subparsers('subcommand for load'</code>).</li>
 <li>Also found this <a href="https://stackoverflow.com/questions/8512253/how-should-i-implement-nested-subcommands-in-python">stackoverflow post</a> from &gt; 10 years ago with python2.x that helped piece this together with the documentation.</li>
 </ul>
 </div>
 
-<div id="outline-container-orgf856e8d" class="outline-3">
-<h3 id="orgf856e8d"><span class="section-number-3">4.1.</span> Results from parsing arguments</h3>
+<div id="outline-container-orga188be4" class="outline-3">
+<h3 id="orga188be4"><span class="section-number-3">4.1.</span> Results from parsing arguments</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 <pre class="src src-python">print("The default --help results")
@@ -337,8 +335,8 @@ options:
 </div>
 </div>
 
-<div id="outline-container-org61e9926" class="outline-3">
-<h3 id="org61e9926"><span class="section-number-3">4.2.</span> Tangled code</h3>
+<div id="outline-container-org0966c76" class="outline-3">
+<h3 id="org0966c76"><span class="section-number-3">4.2.</span> Tangled code</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-python">from argparse import ArgumentParser
@@ -378,7 +376,7 @@ print(parser.parse_args(['load', '--help']))
 <div id="postamble" class="status">
 <p class="date">Date: 2023-02-08 Wed 00:00</p>
 <p class="author">Author: Russell Brinson</p>
-<p class="date">Created: 2023-02-09 Thu 00:13</p>
+<p class="date">Created: 2023-02-09 Thu 12:32</p>
 </div>
 </body>
 </html>
