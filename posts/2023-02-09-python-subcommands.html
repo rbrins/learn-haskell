@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2023-02-09 Thu 00:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>All Blog Posts</title>
+<title>Figuring out Python Subcommands with ArgParse</title>
 <meta name="author" content="Russell Brinson" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -195,183 +196,188 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">All Blog Posts</h1>
+<h1 class="title">Figuring out Python Subcommands with ArgParse</h1>
 
-<div id="outline-container-org3c05ba8" class="outline-2">
-<h2 id="org3c05ba8"><span class="section-number-2">1.</span> Overview</h2>
+<div id="outline-container-org20c70e8" class="outline-2">
+<h2 id="org20c70e8"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-This page is a list of all blog posts on the site. It is created using literate programming in an Org File (albeit by a literate programming beginner). That pulls all files from a directory (and not directories), checks for html extention (really just 'l' for now), then converts to an Org mode links (so that I can export to html easier, which you are reading on).
+While watching <a href="https://www.twitch.tv/mttaggart">mttaggart</a> from <a href="https://taggartinstitute.org/">The Taggart Institute</a> stream is programming on KASM manager with python, he ran into a question that has haunted me before and if answer, would certainly help me with other projects. That question is roughly, how the heck does one tackle subcommands with the built-in library of argparse in python. Taggart eventually went with <a href="https://click.palletsprojects.com/en/8.1.x/">click</a> as a package for "beautiful command line interfaces".
 </p>
 
-<ul class="org-ul">
-<li>[+] List completed - # of files: 72</li>
-<li>[+] # of HTML files: 26</li>
-<li>[+] Converted 26 files into 26 valid links</li>
-<li><a href="./2022-03-06-cyber-news-of-week.html">2022-03-06 cyber news of week</a></li>
-<li><a href="./2022-03-13-cyber-news-of-week.html">2022-03-13 cyber news of week</a></li>
-<li><a href="./2022-05-25-basic-ad-enum-on-wire.html">2022-05-25 basic ad enum on wire</a></li>
-<li><a href="./2022-11-01-blogkickoff.html">2022-11-01 blogkickoff</a></li>
-<li><a href="./2022-11-02-basic-functional-arguments.html">2022-11-02 basic functional arguments</a></li>
-<li><a href="./2022-11-03-haskell-first-steps.html">2022-11-03 haskell first steps</a></li>
-<li><a href="./2022-11-04-state-of-progress.html">2022-11-04 state of progress</a></li>
-<li><a href="./2022-11-20-taking-on-emacs.html">2022-11-20 taking on emacs</a></li>
-<li><a href="./2022-11-21-interactive-code.html">2022-11-21 interactive code</a></li>
-<li><a href="./2022-11-22-emacs-learnings.html">2022-11-22 emacs learnings</a></li>
-<li><a href="./2022-11-23-Haskell-LP-Budget.html">2022-11-23 Haskell LP Budget</a></li>
-<li><a href="./2022-11-24-thanksgiving-update.html">2022-11-24 thanksgiving update</a></li>
-<li><a href="./2022-11-25-publishing-with-org.html">2022-11-25 publishing with org</a></li>
-<li><a href="./2022-11-26-revisiting-dockworker.html">2022-11-26 revisiting dockworker</a></li>
-<li><a href="./2022-11-27-budget-template-p2.html">2022-11-27 budget template p2</a></li>
-<li><a href="./2022-11-28-budget-template-p3.html">2022-11-28 budget template p3</a></li>
-<li><a href="./2022-11-29-security-tools.html">2022-11-29 security tools</a></li>
-<li><a href="./2022-11-30-november-recap.html">2022-11-30 november recap</a></li>
-<li><a href="./2022-12-05-learning-nim.html">2022-12-05 learning nim</a></li>
-<li><a href="./2022-12-09-nim-encryption.html">2022-12-09 nim encryption</a></li>
-<li><a href="./2023-01-08-installing-spellcheck-emacs.html">2023-01-08 installing spellcheck emacs</a></li>
-<li><a href="./2023-01-09-Looking-into-the-new-year.html">2023-01-09 Looking into the new year</a></li>
-<li><a href="./2023-01-24-pivot-lab-setup.html">2023-01-24 pivot lab setup</a></li>
-<li><a href="./2023-01-25-ansible-learnings.html">2023-01-25 ansible learnings</a></li>
-<li><a href="./2023-02-02-pivoting.html">2023-02-02 pivoting</a></li>
-<li><a href="./2023-02-09-python-subcommands.html">2023-02-09 python subcommands</a></li>
-</ul>
+<p>
+Currently I have a python project I'd like to use the subcommand of "load" or "unload" with it that both have different arguments associated with it. This example, rant, and hopeful proof-of-concept will help in utilizing subcommands. Specifically, this is for adversary emulation within a devops environment that is confirmed to have the python docker sdk but no other non-standard module assumptions.
+</p>
 </div>
 </div>
 
 
 
-
-<div id="outline-container-org599cb46" class="outline-2">
-<h2 id="org599cb46"><span class="section-number-2">2.</span> Write a python script that prints out all files as a result</h2>
+<div id="outline-container-org992ba7e" class="outline-2">
+<h2 id="org992ba7e"><span class="section-number-2">2.</span> The Setup</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Modified from <a href="https://stackoverflow.com/a/3207973">Stack Overflow Answer on How do I list all files of a directory</a>. I set the path to the local path since that is where all of the blogs posts are stored. This should filter out any directories that may exist in the future.
+This is just utilizing the <a href="https://docs.python.org/dev/library/argparse.html">argparse module</a>, to create two global variable values.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python" id="orgfabcf4f">from os import listdir
-from os.path import isfile, join
+<pre class="src src-python">from argparse import ArgumentParser
 
-mypath = "./"
+parser = ArgumentParser()
 
-onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-
-## enter length of directory!
-print("- [+] List completed - # of files: {}".format(len(onlyfiles))) 
+parser.add_argument('--registry', help="The location of the registry to login", default="docker.io")
+parser.add_argument('--repository', help="Where to push your image")
+parser.add_argument('--username')
+parser.add_argument('--password')
+parser.add_argument('--DockerClient', help="The docker socket to use that you have permissiosn for", default="unix:///var/run/docker.sock/")
 
 </pre>
 </div>
-
-<pre class="example">
-- [+] List completed - # of files: 72
-</pre>
 </div>
 </div>
 
-
-<div id="outline-container-org4380719" class="outline-2">
-<h2 id="org4380719"><span class="section-number-2">3.</span> Take this list and filter on for *.html files</h2>
+<div id="outline-container-orgc580cc5" class="outline-2">
+<h2 id="orgc580cc5"><span class="section-number-2">3.</span> Subparsers, subcommands, and their subarguments</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-While the <code>'l'</code> in html may not be the only extention that ends with <code>'l'</code> in existence. It is good enough for my personal blog. The risk of a potential inclusion with another extension that ends in <code>'l'</code> is acceptable. This is similar to the risk I'm accepting with only parsing for dates at the beginning, and exluding this file starting with <code>'a'</code>. 
+Next we want to start the subparsers pointing to the <code>subcommand</code>, note that this is what python will use when describing if you print the object, I also use the <code>title</code> parameter so that it shows up in <code>-h</code>. We do this with the <code>parser</code> above and running the <code>add_subparsers</code> method on it. Then we can continue by adding arguments to the subparsers, like we did with the global arguments.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python" id="orgfa1b9d8">htmlList = []
-for line in onlyfiles:
-  if (line[-1] == 'l') and (line[0] != 'a'):
-    htmlList.append(line)
+<pre class="src src-python">subcommand_parser = parser.add_subparsers(dest='subcommand', title="subcommand", help="additonal subcommand help here")
 
-print("- [+] # of HTML files: {}".format(len(htmlList)))
+load_parser = subcommand_parser.add_parser('load')
+unload_parser = subcommand_parser.add_parser('unload')
 </pre>
 </div>
 
-<pre class="example">
-- [+] # of HTML files: 26
+
+<p>
+Next is adding arguments specific to our subcommands with the <code>add_argument</code> method of the specific subcommand. We can see that unload doesn't have any additional arguments and load has two additional arguments.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">
+# Load First
+load_parser.add_argument('--dataLoc', help="Provide the file location of the data to load into the container")
+load_parser.add_argument('--dockerFile', help="Specify a specific dockerfile location. Warning! this assumes you load the data into the container manually with the dockerfile")
+
+# Unload doesn't have additonal arguments, just executes different functions
+
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org5c5677f" class="outline-2">
-<h2 id="org5c5677f"><span class="section-number-2">4.</span> Convert html files to org links</h2>
+<div id="outline-container-orgb685959" class="outline-2">
+<h2 id="orgb685959"><span class="section-number-2">4.</span> Conclusion</h2>
 <div class="outline-text-2" id="text-4">
-<div class="org-src-container">
-<pre class="src src-python" id="orgee187d0">blogPostLinks = []  
-for line in htmlList:
-  getDate = line[:10]
-  getTitle = line[11:-5]
-  cleanTitle = getTitle.replace("-", " ")
-  orgLink = "- [[file:./" + line + "][" + getDate + " " + cleanTitle + "]]"
-  blogPostLinks.append(orgLink)
+<ul class="org-ul">
+<li>I'm definitely more comfortable with subcommands now and pretty much finished my initial use case in this post.</li>
+<li>If you wanted to add further subcommands, it would be as simple as adding another <code>add_subparsers</code> to the <code>subcommand_parser</code> object.</li>
+</ul>
+</div>
 
-print("- [+] Converted {} files into {} valid links".format(len(htmlList), len(blogPostLinks)))
+<div id="outline-container-orgb3f63da" class="outline-3">
+<h3 id="orgb3f63da"><span class="section-number-3">4.1.</span> Results from parsing arguments</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-python">print("The default --help results")
+print(parser.parse_args(['--help']))
+print("\n\n\n---\n\n\n")
+print("The default load --help results")
+print(parser.parse_args(['load', '--help']))
+
+
 </pre>
 </div>
+
 
 <pre class="example">
-- [+] Converted 26 files into 26 valid links
+The default --help results
+usage:  [-h] [--global-thing] [--global-value GLOBAL_VALUE]
+	[--registry REGISTRY] [--repository REPOSITORY] [--username USERNAME]
+	[--password PASSWORD] [--DockerClient DOCKERCLIENT]
+	{load,unload} ...
+
+options:
+  -h, --help            show this help message and exit
+  --global-thing
+  --global-value GLOBAL_VALUE
+  --registry REGISTRY   The location of the registry to login
+  --repository REPOSITORY
+			Where to push your image
+  --username USERNAME
+  --password PASSWORD
+  --DockerClient DOCKERCLIENT
+			The docker socket to use that you have permissiosn for
+
+subcommand:
+  {load,unload}         additonal subcommand help here
+
+
+---
+
+
+
+The default load --help results
+usage:  load [-h] [--dataLoc DATALOC] [--dockerFile DOCKERFILE]
+
+options:
+  -h, --help            show this help message and exit
+  --dataLoc DATALOC     Provide the file location of the data to load into the
+			container
+  --dockerFile DOCKERFILE
+			Specify a specific dockerfile location. Warning! this
+			assumes you load the data into the container manually
+			with the dockerfile
+
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org53a66c2" class="outline-2">
-<h2 id="org53a66c2"><span class="section-number-2">5.</span> The Final Code</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-Note, the actual code block below has been modified to show the text that the header will execute. You should be able to recreate using the visual header below, and the code below, along with all of the code block (except Overview) above, named how they are named between the <code>&lt;&lt;import-here&gt;&gt;</code> in order. 
-</p>
-
-<p>
-<code class="src src-ORG">#+BEGIN _SRC python :results output raw :exports results :noweb yes :tangle yes</code>
-</p>
+<div id="outline-container-orgfa83521" class="outline-3">
+<h3 id="orgfa83521"><span class="section-number-3">4.2.</span> Tangled code</h3>
+<div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
-<pre class="src src-python">&lt;&lt;file-list&gt;&gt;
-&lt;&lt;html-filter&gt;&gt;
-&lt;&lt;org-links&gt;&gt;
-for line in blogPostLinks:
-  print(line)
+<pre class="src src-python">from argparse import ArgumentParser
+
+parser = ArgumentParser()
+
+parser.add_argument('--global-thing', action = 'store_true')
+parser.add_argument('--global-value', default = 42)
+parser.add_argument('--registry', help="The location of the registry to login", default="docker.io")
+parser.add_argument('--repository', help="Where to push your image")
+parser.add_argument('--username')
+parser.add_argument('--password')
+parser.add_argument('--DockerClient', help="The docker socket to use that you have permissiosn for", default="unix:///var/run/docker.sock/")
+
+subcommand_parser = parser.add_subparsers(dest='subcommand', title="subcommand", help="additonal subcommand help here")
+
+load_parser = subcommand_parser.add_parser('load')
+unload_parser = subcommand_parser.add_parser('unload')
+
+# Load First
+load_parser.add_argument('--dataLoc', help="Provide the file location of the data to load into the container")
+load_parser.add_argument('--dockerFile', help="Specify a specific dockerfile location. Warning! this assumes you load the data into the container manually with the dockerfile")
+
+# Unload doesn't have additonal arguments, just executes different functions
+
+print("The default --help results")
+print(parser.parse_args(['--help']))
+
+print("The default load --help results")
+print(parser.parse_args(['load', '--help']))
 </pre>
 </div>
-
-<p>
-Then what it would look like if from if you exported the above blog into a webpage with <code>:exports code</code> instead of the current header of <code>:exports results</code>
-</p>
-<div class="org-src-container">
-<pre class="src src-python">from os import listdir
-from os.path import isfile, join
-
-mypath = "./"
-
-onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-
-## enter length of directory!
-print("- [+] List completed - # of files: {}".format(len(onlyfiles))) 
-
-htmlList = []
-for line in onlyfiles:
-  if (line[-1] == 'l') and (line[0] != 'a'):
-    htmlList.append(line)
-
-print("- [+] # of HTML files: {}".format(len(htmlList)))
-blogPostLinks = []  
-for line in htmlList:
-  getDate = line[:10]
-  getTitle = line[11:-5]
-  cleanTitle = getTitle.replace("-", " ")
-  orgLink = "- [[file:./" + line + "][" + getDate + " " + cleanTitle + "]]"
-  blogPostLinks.append(orgLink)
-
-print("- [+] Converted {} files into {} valid links".format(len(htmlList), len(blogPostLinks)))
-for line in blogPostLinks:
-  print(line)
-</pre>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2023-01-09</p>
+<p class="date">Date: 2023-02-08 Wed 00:00</p>
 <p class="author">Author: Russell Brinson</p>
+<p class="date">Created: 2023-02-09 Thu 00:07</p>
 </div>
 </body>
 </html>
