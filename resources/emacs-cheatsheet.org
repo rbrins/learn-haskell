@@ -167,3 +167,12 @@ If you want markdown support need to add to your =.emacs= file, =(require 'ox-md
 ** Magit Resources
 - [[https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git][Mastering Emacs Intro to Magit]]
 [[https://magit.vc/manual/magit.html][- Magit User Manual]]
+
+
+* Hledger-mode
+Note, I set this myself based on the recommendation by hledger-mode
+
+#+BEGIN_SRC elisp
+(global-set-key (kbd "C-c e") 'hledger-jentry)
+
+#+END_SRC
