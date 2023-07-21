@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-07-21 Fri 00:17 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hacker's Mindset</title>
+<meta name="author" content="Russell Brinson" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Hacker's Mindset</h1>
+
+<div id="outline-container-org7d49d66" class="outline-2">
+<h2 id="org7d49d66"><span class="section-number-2">1.</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I've been appreciating the philosophical readings and videos of those that seem to "hack" on their system to make it their own representation of what computing looks to them. 
+</p>
+
+<p>
+Specifically:
+</p>
+<ul class="org-ul">
+<li>System Crafters Youtube</li>
+<li>Emacs Org-mode implementations</li>
+<li>MIT's 6.001 Intro to Computer Science course and the accompaniment Structure and Interpretation of Computer Programs</li>
+<li>GNU Guix</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgef265a1" class="outline-2">
+<h2 id="orgef265a1"><span class="section-number-2">2.</span> Definitions</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Note that this definition of "hack" is much different than the use of the term in information security or news articles. The term they use is often with a malicious connotation. 
+</p>
+
+<p>
+The term "hack" used here is to use a system in such a way to understand the underlying components enough to manipulate them in ways the doer desires. 
+</p>
+
+<p>
+At the surface, this proposed definition does not include malicious activity. However, in close inspection we see that malicious hacks indeed manipulate system components to achieve a goal. This definition further doesn't specify if the owner of a system and the doer of the hack are the same person. So then we can clearly see that this line in this particular definition can be drawn between those activities:
+</p>
+<ul class="org-ul">
+<li>the system owner is <i>the</i> doer of the hack</li>
+<li>the system owner is <i>not</i> the doer of the hack</li>
+</ul>
+
+<p>
+The system owner who is <i>not</i> the doer of the hack, is either <i>aware</i> or <i>not aware</i> of the hack, and furthermore is either <i>for</i> or <i>against</i> the hack. Regardless of the system owner's knowledge about the hack, the system owner most likely has requirements for the system in some way. This requirements can be things like Store Data A until Person B needs access then delete Data A. The system owner sets out in a complex way to satisfy those needs. This complex way of meeting those requirements often involves procurement of hardware or infrastructure, combining components together, and testing the new system to ensure it meets those requirements.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org86bcc16" class="outline-2">
+<h2 id="org86bcc16"><span class="section-number-2">3.</span> Psychology</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org5faf40f" class="outline-3">
+<h3 id="org5faf40f"><span class="section-number-3">3.1.</span> Anchoring Effect</h3>
+<div class="outline-text-3" id="text-3-1">
+<blockquote>
+<p>
+The anchoring effect is a cognitive bias whereby an individual's decisions are influenced by a particular reference point or "anchor".
+</p>
+</blockquote>
+<ul class="org-ul">
+<li><a href="https://en.wikipedia.org/wiki/Anchoring_(cognitive_bias)">https://en.wikipedia.org/wiki/Anchoring_(cognitive_bias)</a></li>
+</ul>
+
+<p>
+In negotiating, anchoring is where you specify a position first so that any counter to that position is framed around the initial point. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbd041c8" class="outline-3">
+<h3 id="orgbd041c8"><span class="section-number-3">3.2.</span> Sunk Cost Fallacy</h3>
+<div class="outline-text-3" id="text-3-2">
+<blockquote>
+<p>
+a sunk cost (also known as retrospective cost) is a cost that has already been incurred and cannot be recovered.
+</p>
+</blockquote>
+
+<p>
+Since the sunk cost cannot be recovered, decisions made on those costs about the future will not help you. The best path forward is to consider the future costs and the effects those will have. However, when making decisions, sunk costs are often mixed with future costs and effect, further confusing the decision making process.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://en.wikipedia.org/wiki/Sunk_cost">https://en.wikipedia.org/wiki/Sunk_cost</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb32eca2" class="outline-2">
+<h2 id="orgb32eca2"><span class="section-number-2">4.</span> Understanding Our Definition Better</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Now, lets think back to our two entities, the system owner and the doer. 
+</p>
+<ul class="org-ul">
+<li>Who is effected by anchoring here the most?</li>
+<li>Who is a risk of participating in the sunk cost fallacy?</li>
+</ul>
+
+<p>
+The system owner:
+</p>
+<ul class="org-ul">
+<li>has a purpose for the system and its underlying components
+<ul class="org-ul">
+<li>self-use</li>
+<li>hired by a company to do a specific thing</li>
+<li>strict requirements or all in the head</li>
+</ul></li>
+<li>has resources in the system and its underlying components
+<ul class="org-ul">
+<li>time into the system</li>
+<li>dollars into the system</li>
+</ul></li>
+</ul>
+
+<p>
+Both of these act as anchoring points, and blinders, to the system owner. The system owner only knows of the system from the <i>intended</i> purpose given to it and this intended purpose has been carefully crafted through the system owner's resources. Additionally, those resources are sunk costs and you are not getting back the time.
+</p>
+
+<p>
+The doer, on the other hand, is not weighed down with an anchoring point (unless they choose to be) and has no resources into the system. This gives the doer a completely blank slate to <i>explore</i> the system's capabilities, rather than the system's <i>purpose</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org21a0151" class="outline-2">
+<h2 id="org21a0151"><span class="section-number-2">5.</span> Exploring the Capabilities</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Now that we know the doer is unconstrained by the system's purpose. The doer can start to act on their own curiosities and goals. 
+</p>
+
+<p>
+Defining your goals first may seem counter intuitive and it would be to the modern product offering first, define the problem later approach. This takes a self-reflection moment and isn't defined by what is and isn't a doer. Perhaps you start with a problem you would like to solve or to fix a minor grievance you have with a particular thing.
+</p>
+
+<p>
+There are multiple ways, approaches, mindsets, and methodologies when trying to understand an unknown system, but we must choose one to start. I'd like to propose one loosely based off the scientific method.
+</p>
+
+<ol class="org-ol">
+<li>Appeal to your curiosity</li>
+<li>Research this curiosity and take notes</li>
+<li>Form (or reform) your goal</li>
+<li>Test things that would need to achieve that goal</li>
+<li>Take notes on what was tested and why</li>
+<li><code>GOTO 1</code></li>
+</ol>
+
+<p>
+This is basic, but lets use an example
+</p>
+<ol class="org-ol">
+<li>I'm curious about solarpunk news</li>
+<li>I had a few leads from social media already so I started searching based on the key words, found some reddit threads, found some book recommendations, which had authors that could be further researched</li>
+<li>For some reason at this point I decided I wanted a feed for solarpunk news</li>
+<li>Read up on some ways to have a dashboard of these sites, blogs, authors into an RSS feed</li>
+<li>Took notes on setting up software to put RSS links into the feed, but found out that some of the blogs didn't support RSS. Now I go back to 1.</li>
+</ol>
+
+<p>
+6 takes us back to #1
+</p>
+
+<ol class="org-ol">
+<li>I wonder if something exist to turn sites into a RSS feed</li>
+<li>research somethings and don't find exactly what I'm looking for since the site is based on a static HTML page</li>
+<li>Goal is to create a script to periodically scrape the page for new posts and put it into a feed format</li>
+<li>Start doing some trials (and may need to visit #1 again if I don't know how to scrape website with my programming language of choice)</li>
+<li>Notes on getting it working and issues that arose.</li>
+<li>Hopefully there will always be a repeat to #1</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgbab043b" class="outline-2">
+<h2 id="orgbab043b"><span class="section-number-2">6.</span> These Notes</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Keeping notes helps multiple cognitive functions, like memory and critical thinking. Both of these highly relevant to everyone in the world, but especially those doers that are discovering new technologies and learning new skills. Just because you used a skill 4 years ago doesn't mean that you remember it now, but by taking detailed notes, not only do you give future self a chance to remember it better, you can actually go to see what you did and why. 
+</p>
+
+<p>
+For the doer looking to modify other systems, your notes become a gateway into the reasoning of test and results you have done so you don't repeat past mistakes and so you can launch off a new point of curiosity.
+</p>
+
+<p>
+On a more pragmatic way of note taking, I'd suggest something that allows for easy linking. For me that is a setup of Emacs + Org Mode + Org-roam. For others this could be Obsidian, Notion, Roam Research, a Zettlekasten, or whatever you want to use. Just take the notes and don't worry about the perfection of them. 
+</p>
+
+<p>
+These Notes are the most important tool in the Doers arsenal.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9d5b731" class="outline-2">
+<h2 id="org9d5b731"><span class="section-number-2">7.</span> If Notes are most important, Test things can be skimmed on</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+BY NO MEANS.
+.
+.
+.
+If Notes are your mind and thinking, testing is the means to have thought.
+</p>
+
+<p>
+Testing can be anything from trying and failing to install a program, to creating an elaborate program in COBOL that is transpiled into C from a script in Python, all of which you wrote. 
+</p>
+
+<p>
+As you are testing, you are thinking of what you just did, the next step, and other completely different things. All potential useful to your future doer self and ripe for note taking. Most of these would not have been thought up in this moment unless you were doing the testing. 
+</p>
+
+<p>
+As you continue testing new things and acting on new goals, you will see connections between the items you are working on, the notes you have taken, and the next steps for you. 
+</p>
+
+<p>
+After all, you are a doer, not just a noter.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9722b48" class="outline-2">
+<h2 id="org9722b48"><span class="section-number-2">8.</span> Some other definitions</h2>
+<div class="outline-text-2" id="text-8">
+<blockquote>
+<p>
+Fraud is intentional deception to secure unfair or unlawful gain, or to deprive a victim of a legal right.
+</p>
+</blockquote>
+<p>
+From <a href="https://en.wikipedia.org/wiki/Fraud">Wikipedia on Fraud</a>
+</p>
+
+<blockquote>
+<p>
+Deception or falsehood is an act or statement that misleads, hides the truth, or promotes a belief, concept, or idea that is not true.
+</p>
+</blockquote>
+<p>
+From <a href="https://en.wikipedia.org/wiki/Deception">Wikipedia on Deception</a>
+</p>
+
+<blockquote>
+<p>
+TRESPASSING:  The act of unlawfully entering or damaging property or
+the rights of another.  Logging into or accessing someone else's 
+computer (property) without their consent.
+</p>
+
+<p>
+MALICE:  A desire to harm others or to see others suffer; extreme ill
+will or spite. 
+</p>
+
+<p>
+BREAKING AND ENTERING:  The act of entering property without permission
+by way of the act or force through picking or breaking a lock; guessing
+a computer account password or other methods of trespass.
+</p>
+</blockquote>
+<p>
+From <a href="https://sdf.org/?faq?HACKER?01">SDF Public Access UNIX System [01] WHAT IS HACKING?</a>
+</p>
+
+<p>
+This is not meant to be legal advice and I'm not a lawyer.
+The point is that when you are being the doer and not the system owner, you need to understand what you can and can't do. Pressing F12 in a browser is fine, guessing a password without permission to guess a password is not okay.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7430b4e" class="outline-2">
+<h2 id="org7430b4e"><span class="section-number-2">9.</span> Free and Open Source</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Since we don't want to land in jail, not passing go, and owing more than $200. When the doer looks to test their goals and conduct research, they should highly consider those systems that have permission to tinker with.
+</p>
+
+<p>
+And that leads up to Free and Open Source systems, a plethora of programs, operating systems, libraries, books, games, songs, and what ever else you could want is available at your finger tips with explic permission to modify and redistribute. 
+</p>
+
+<p>
+Going with the RSS feed example above, I used a feed program that as available with emacs, so that I could write a custom script to scrape that one website each time the program synced with all of the other websites. I'm sure this could be completed with other tools or a custom python script, but I had freedom to choose that because of the Free and Open Source systems I've decided to use.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd2c5a6a" class="outline-2">
+<h2 id="orgd2c5a6a"><span class="section-number-2">10.</span> Concluding Thoughts</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li>Be kind</li>
+<li>Be Courious</li>
+<li>Be learning</li>
+<li>Be discovering</li>
+<li>Be tinkering</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2023-07-15 Sat 00:00</p>
+<p class="author">Author: Russell Brinson</p>
+<p class="date">Created: 2023-07-21 Fri 00:17</p>
+</div>
+</body>
+</html>
