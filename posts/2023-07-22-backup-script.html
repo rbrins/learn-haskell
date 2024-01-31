@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-01-30 Tue 21:25 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Creating a Backup Script</title>
+<meta name="author" content="Russell Brinson" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Creating a Backup Script</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6b9a37b">1. Overview</a></li>
+<li><a href="#org1b0b1aa">2. Backup Methods</a>
+<ul>
+<li><a href="#orga365558">2.1. Incremental</a></li>
+<li><a href="#orgf4430b3">2.2. Full</a></li>
+</ul>
+</li>
+<li><a href="#org38366f9">3. Backup Solutions</a></li>
+<li><a href="#orga5c8d8b">4. Making my Own</a></li>
+<li><a href="#org415c7a5">5. Get Backup Settings</a>
+<ul>
+<li><a href="#org915672c">5.1. ~/backups/.backups file format</a></li>
+</ul>
+</li>
+<li><a href="#org58f738f">6. TAR everything based on the output of the settings</a></li>
+<li><a href="#org2900249">7. TAR multiple files</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6b9a37b" class="outline-2">
+<h2 id="org6b9a37b"><span class="section-number-2">1.</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I've been doing manual backups for a while and finally in a place that I can begin scripting this backup (mostly because I'm somewhat organized now).
+</p>
+
+<p>
+I'd like to have a few levels of backup and recovery tiers, similar to how we would in a corp environment. By this I mean that 
+</p>
+<ul class="org-ul">
+<li>I want to have the data itself backup at regular intervals 
+<ul class="org-ul">
+<li>for my threat model this is roughly once every two months but I'll do it monthly</li>
+</ul></li>
+<li>I want to have the methods needed to <i>view</i> the data
+<ul class="org-ul">
+<li>for half of my files are text based I don't have to worry about this and can just make sure I have a very basic text editor available.</li>
+<li>The other part consist of PDF, images, and libreoffice files. I'll just make sure to include some of those in this backup as well. This requirement for the threat model is MUCH less since none of it is proprietary formats, and I'll probably keep one liveUSB that has all of the tools I need on it once / year.</li>
+<li>Decrypting / Unziping the data tools</li>
+</ul></li>
+</ul>
+
+<p>
+For the data, I need to ensure the following are backed up.
+</p>
+
+<ul class="org-ul">
+<li>Bitwarden</li>
+<li>~/.ssh keys</li>
+<li>~/.dotfiles</li>
+<li>~/org files (which includes my org-roam, but not the db since that can be rebuilt with a command)</li>
+<li>~/Documents (all of those PDFs, images, and libreoffice files</li>
+<li>~/Pictures (anything I've decided is worth store for storing sake, lowest priority of availability)</li>
+<li>~/Projects (anything here is already in a git repo, probably on github, there are two that aren't on any remote git repo. Plus some of the remote git repos have gitignores with files I'm interested in keeping)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1b0b1aa" class="outline-2">
+<h2 id="org1b0b1aa"><span class="section-number-2">2.</span> Backup Methods</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orga365558" class="outline-3">
+<h3 id="orga365558"><span class="section-number-3">2.1.</span> Incremental</h3>
+</div>
+
+<div id="outline-container-orgf4430b3" class="outline-3">
+<h3 id="orgf4430b3"><span class="section-number-3">2.2.</span> Full</h3>
+</div>
+</div>
+
+<div id="outline-container-org38366f9" class="outline-2">
+<h2 id="org38366f9"><span class="section-number-2">3.</span> Backup Solutions</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>I was introduced to restic and like the idea of being able to sent it to s3 buckets, sftp, or local. It includes encryption by default and is incremental. 
+<ul class="org-ul">
+<li>It is well maintained now but doesn't have the longevity I'd like to see.</li>
+</ul></li>
+<li>Create my own that zips up folders, uses gpg to encrypt, then pushes it out to the storage locations. 
+<ul class="org-ul">
+<li>This would be able to use the encryption of a well maintained GPG</li>
+<li>These are full backups though so I would need to eat up the extra space or check against a list of last backed up times to the modified time of a file (definitely not going to try inner-file incremental)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga5c8d8b" class="outline-2">
+<h2 id="orga5c8d8b"><span class="section-number-2">4.</span> Making my Own</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+I'm going to roll my own for learning and customizability. 
+For the archive I'm going to use <code>TAR</code> and for the encryption I'm going to use <code>GPG</code>.
+</p>
+
+<ol class="org-ol">
+<li>Take the TAR of everything I want</li>
+<li>Confirm that it was successful (exit if not)</li>
+<li>Encrypt tar output with my public key</li>
+<li>Manual verify that is can be decrypted and untar'd (do the recovery)</li>
+<li>Delete oldest timestampped full backup (probably 4 or 5 months worth)</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-org415c7a5" class="outline-2">
+<h2 id="org415c7a5"><span class="section-number-2">5.</span> Get Backup Settings</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>should be a file in the <code>~/backups</code> directory named <code>.backups</code> that will specify any useful information like the last backed up date, directories or files to add, and any to exclude.</li>
+</ul>
+</div>
+
+<div id="outline-container-org915672c" class="outline-3">
+<h3 id="org915672c"><span class="section-number-3">5.1.</span> ~/backups/.backups file format</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #a8a8a8; font-style: italic;">---</span>
+<span style="color: #00d3d0;">include</span>:
+  - <span style="color: #79a8ff;">"dir1"</span>
+  - <span style="color: #79a8ff;">"dir2/subdir"</span>
+  - <span style="color: #79a8ff;">"dir3/specific_file"</span>
+
+<span style="color: #00d3d0;">exclude</span>:
+  - <span style="color: #79a8ff;">"dir4"</span>
+  - <span style="color: #79a8ff;">"dir1/subdir1"</span>
+  - <span style="color: #79a8ff;">"dir1/specific_file"</span>
+
+<span style="color: #00d3d0;">last_backup</span>: timestamp
+<span style="color: #00d3d0;">backup_type</span>: <span style="color: #79a8ff;">"incremental"</span> or <span style="color: #79a8ff;">"full"</span>
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org58f738f" class="outline-2">
+<h2 id="org58f738f"><span class="section-number-2">6.</span> TAR everything based on the output of the settings</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>using <a href="https://help.ubuntu.com/community/BackupYourSystem/TAR">Ubuntu's BackupYourSystem</a> for information</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #00d3d0;">timestamp</span>=$(<span style="color: #f78fe7; font-weight: bold;">data -I</span>)
+tar -cvpzf ~/backups/$<span style="color: #00d3d0;">timestamp</span>-backup.tar.gz --exclude=~/backups/$<span style="color: #00d3d0;">timestamp</span>-backup.tar.gz 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2900249" class="outline-2">
+<h2 id="org2900249"><span class="section-number-2">7.</span> TAR multiple files</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>using <a href="https://kb.iu.edu/d/acfi">Use tar to combine multiple files into an archive file</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-shell">tar -cvf my_files.tar file1 file2
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2023-07-22</p>
+<p class="author">Author: Russell Brinson</p>
+<p class="date">Created: 2024-01-30 Tue 21:25</p>
+</div>
+</body>
+</html>
